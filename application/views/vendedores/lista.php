@@ -17,10 +17,10 @@
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
+					<th>Código</th>
 					<th>Nome</th>
-					<th>CPF</th>
-					<th>Sexo</th>
-					<th>Email</th>
+					<th>Nascimento</th>
+					<th>Comissão (%)</th>					
 					<th class="text-center">Opções</th>
 				</tr>
 			</thead>
@@ -28,10 +28,10 @@
 				<?php if (isset($vendedores[0]->ven_codigo)) { ?>	
 					<?php foreach ($vendedores as $dado) { ?>
 						<tr id="tr_item_<?= $dado->ven_codigo ?>">
+							<td><?= $dado->ven_codigo ?></td>
 							<td><?= $dado->ven_nome ?></td>
-							<td><?= $dado->ven_cpf ?></td>
-							<td><?= $dado->ven_sexo ?></td>
-							<td><?= $dado->ven_email ?></td>							
+							<td><?= date('d/m/Y', strtotime($dado->ven_nascimento)) ?></td>
+							<td><?= $dado->ven_comissao ?></td>							
 							<td class="text-center">																						
 								<button type="button" onclick="editarVendedores('mostrar',  <?= $dado->ven_codigo ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 								<button type="button" onclick="removerVendedores('mostrar', <?= $dado->ven_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
@@ -68,24 +68,16 @@
 					<form id="formulario_cadastro">
 						<div class="form-group">
 							<label for="ven_nome">Nome</label>
-							<input type="text" class="form-control para_cadastrar" id="ven_nome" name="ven_nome" placeholder="Informe o seu nome">							
+							<input type="text" class="form-control para_cadastrar" id="ven_nome" name="ven_nome" placeholder="Informe o nome do vendedor">							
 						</div>
 						<div class="form-group">
-							<label for="ven_cpf">CPF</label>
-							<input type="text" class="form-control para_cadastrar" id="ven_cpf" name="ven_cpf" placeholder="Informe o seu CPF">							
+							<label for="ven_nascimento">Nascimento</label>
+							<input type="date" class="form-control para_cadastrar" id="ven_nascimento" name="ven_nascimento" placeholder="Informe o Nascimento do vendedor">							
 						</div>
 						<div class="form-group">
-							<label for="ven_sexo">Sexo</label>
-							<select class="form-control para_cadastrar" id="ven_sexo" name="ven_sexo">
-								<option value=""></option>
-								<option value="Masculino">Masculino</option>
-								<option value="Feminino">Feminino</option>															
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="ven_email">Email</label>
-							<input type="email" class="form-control para_cadastrar" id="ven_email" name="ven_email" placeholder="Informe o seu email">							
-						</div>												
+							<label for="ven_comissao">Comissão (%)</label>
+							<input type="number" step=".01" class="form-control para_cadastrar" id="ven_comissao" name="ven_comissao" placeholder="Informe a % de comissão do vendedor">							
+						</div>																		
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -111,24 +103,16 @@
 					<form id="formulario_edicao">
 						<div class="form-group">
 							<label for="edit_ven_nome">Nome</label>
-							<input type="text" class="form-control para_editar" id="edit_ven_nome" name="ven_nome" placeholder="Informe o seu nome">							
+							<input type="text" class="form-control para_editar" id="edit_ven_nome" name="ven_nome" placeholder="Informe o nome do vendedor">							
 						</div>
 						<div class="form-group">
-							<label for="edit_ven_cpf">CPF</label>
-							<input type="text" class="form-control para_editar" id="edit_ven_cpf" name="ven_cpf" placeholder="Informe o seu CPF">							
+							<label for="edit_ven_nascimento">Nascimento</label>
+							<input type="date" class="form-control para_editar" id="edit_ven_nascimento" name="ven_nascimento" placeholder="Informe o Nascimento do vendedor">							
 						</div>
 						<div class="form-group">
-							<label for="edit_ven_sexo">Sexo</label>
-							<select class="form-control para_editar" id="edit_ven_sexo" name="ven_sexo">
-								<option value=""></option>
-								<option value="Masculino">Masculino</option>
-								<option value="Feminino">Feminino</option>															
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="edit_ven_email">Email</label>
-							<input type="email" class="form-control para_editar" id="edit_ven_email" name="ven_email" placeholder="Informe o seu email">							
-						</div>												
+							<label for="edit_ven_comissao">Comissão (%)</label>
+							<input type="number" step=".01" class="form-control para_editar" id="edit_ven_comissao" name="ven_comissao" placeholder="Informe a % de comissão do vendedor">							
+						</div>											
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -145,7 +129,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-danger text-white">
-					<h5 class="modal-title" id="modal_exclusao_title">Deseja realmente excuir o vendedores?</h5>
+					<h5 class="modal-title" id="modal_exclusao_title">Deseja realmente excuir o vendedor?</h5>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -194,12 +178,13 @@
 		function editarVendedores(opc, ven_codigo) {			
 
 			var dados = {};
-			var itens_clinte = $(`#tr_item_${ven_codigo}`).find("td");						
-			dados['ven_codigo'] = ven_codigo;
-			dados['ven_nome'] = $(itens_clinte[0]).text();
-			dados['ven_cpf'] = $(itens_clinte[1]).text();
-			dados['ven_sexo'] = $(itens_clinte[2]).text();
-			dados['ven_email'] = $(itens_clinte[3]).text();						
+			var itens_vendedor = $(`#tr_item_${ven_codigo}`).find("td");									
+			dados['ven_codigo'] = $(itens_vendedor[0]).text();
+			dados['ven_nome'] = $(itens_vendedor[1]).text();
+			dados['ven_nascimento'] = $(itens_vendedor[2]).text();
+			dados['ven_comissao'] = $(itens_vendedor[3]).text();	
+
+			console.log(dados);							
 			// var dados, refere-se aos dados que estão na instancia, que são mostrados ao usuário
 							
 			// Mostra os modal de edição com os dados preenchidos
@@ -231,7 +216,7 @@
 						mostrarMenssagem('erro');
 					}
 				});				
-			}				
+			}					
 		}
 
 		function removerVendedores(opc, id) {			
@@ -270,20 +255,19 @@
 			var botao = $("#modal_edicao").find("#botao_editar");				
 			$(botao).attr("onclick", `editarVendedores('editar', ${dados.ven_codigo})`);
 			$("#edit_ven_nome").val(dados.ven_nome);
-			$("#edit_ven_cpf").val(dados.ven_cpf);
-			$("#edit_ven_sexo").val(dados.ven_sexo);
-			$("#edit_ven_email").val(dados.ven_email);
+			$("#edit_ven_nascimento").val(dataBRToSQL(dados.ven_nascimento));
+			$("#edit_ven_comissao").val(dados.ven_comissao);			
 			$("#modal_edicao").modal('show');
 		}
 
-		function adicionarItemTabela(dados) {
+		function adicionarItemTabela(dados) {						
 			// Adiciona na tabela (front-end) o item desejado
 			$("#corpo_tabela").append(`
 										<tr id="tr_item_${dados.ven_codigo}">
+											<td>${dados.ven_codigo}</td>
 											<td>${dados.ven_nome}</td>
-											<td>${dados.ven_cpf}</td>
-											<td>${dados.ven_sexo}</td>
-											<td>${dados.ven_email}</td>
+											<td>${dataSQLToBR(dados.ven_nascimento)}</td>
+											<td>${dados.ven_comissao}</td>											
 											<td class="text-center">
 												<button type="button" onclick="editarVendedores('mostrar', ${dados.ven_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 												<button type="button" onclick="removerVendedores('mostrar', ${dados.ven_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
@@ -296,10 +280,10 @@
 		function editarItemTabela(dados) {
 			// Edita os dados que estão na tabela (front-end)			
 			$(`#tr_item_${dados.ven_codigo}`).html(`										
+											<td>${dados.ven_codigo}</td>
 											<td>${dados.ven_nome}</td>
-											<td>${dados.ven_cpf}</td>
-											<td>${dados.ven_sexo}</td>
-											<td>${dados.ven_email}</td>
+											<td>${dataSQLToBR(dados.ven_nascimento)}</td>
+											<td>${dados.ven_comissao}</td>
 											<td class="text-center">
 												<button type="button" onclick="editarVendedores('mostrar', ${dados.ven_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 												<button type="button" onclick="removerVendedores('mostrar', ${dados.ven_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
@@ -349,6 +333,22 @@
 				$("#menssagem_alert").fadeIn(100);
 				$("#menssagem_alert").fadeOut(3000);
 			}
+		}
+
+		function dataSQLToBR(dataA){	
+			var data = dataA.split("-");
+			var dia  = data[2].toString().padStart(2, '0');
+			var mes  = data[1].toString().padStart(2, '0');
+			var ano  = data[0].toString();						
+			return dia+"/"+mes+"/"+ano;
+		}
+
+		function dataBRToSQL(dataA){	
+			var data = dataA.split("/");
+			var dia  = data[2].toString().padStart(2, '0');
+			var mes  = data[1].toString().padStart(2, '0');
+			var ano  = data[0].toString();						
+			return dia+"-"+mes+"-"+ano;
 		}
 
 	</script>

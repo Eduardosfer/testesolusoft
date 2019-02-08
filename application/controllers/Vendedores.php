@@ -20,7 +20,7 @@ class Vendedores extends CI_Controller {
 	 *
 	 * Mostra a lista dos vendedores cadastrados
 	 */
-	public function index() {	
+	public function index() {
 		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page
 		$this->view_data['page'] = "vendedores/lista";
 		$this->view_data['page_title'] = "Lista de vendedores";

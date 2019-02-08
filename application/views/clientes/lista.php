@@ -196,12 +196,12 @@
 		function editarCliente(opc, cli_codigo) {			
 
 			var dados = {};
-			var itens_clinte = $(`#tr_item_${cli_codigo}`).find("td");									
-			dados['cli_codigo'] = $(itens_clinte[0]).text();
-			dados['cli_nome'] = $(itens_clinte[1]).text();
-			dados['cli_cpf'] = $(itens_clinte[2]).text();
-			dados['cli_sexo'] = $(itens_clinte[3]).text();
-			dados['cli_email'] = $(itens_clinte[4]).text();						
+			var itens_cliente = $(`#tr_item_${cli_codigo}`).find("td");									
+			dados['cli_codigo'] = $(itens_cliente[0]).text();
+			dados['cli_nome'] = $(itens_cliente[1]).text();
+			dados['cli_cpf'] = $(itens_cliente[2]).text();
+			dados['cli_sexo'] = $(itens_cliente[3]).text();
+			dados['cli_email'] = $(itens_cliente[4]).text();						
 			// var dados, refere-se aos dados que estão na instancia, que são mostrados ao usuário
 							
 			// Mostra os modal de edição com os dados preenchidos

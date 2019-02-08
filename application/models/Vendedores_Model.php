@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author Eduardo Sfer
  */
-class Vendedores_Model extends MY_Model {	
+class Vendedores_Model extends MY_Model {
 	
 	protected $table = 'vendedores';
 
