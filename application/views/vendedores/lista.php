@@ -17,7 +17,6 @@
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th>Código</th>
 					<th>Nome</th>
 					<th>CPF</th>
 					<th>Sexo</th>
@@ -26,17 +25,16 @@
 				</tr>
 			</thead>
 			<tbody id="corpo_tabela">
-				<?php if (isset($clientes[0]->cli_codigo)) { ?>	
-					<?php foreach ($clientes as $dado) { ?>
-						<tr id="tr_item_<?= $dado->cli_codigo ?>">
-							<td><?= $dado->cli_codigo ?></td>
-							<td><?= $dado->cli_nome ?></td>
-							<td><?= $dado->cli_cpf ?></td>
-							<td><?= $dado->cli_sexo ?></td>
-							<td><?= $dado->cli_email ?></td>							
+				<?php if (isset($vendedores[0]->ven_codigo)) { ?>	
+					<?php foreach ($vendedores as $dado) { ?>
+						<tr id="tr_item_<?= $dado->ven_codigo ?>">
+							<td><?= $dado->ven_nome ?></td>
+							<td><?= $dado->ven_cpf ?></td>
+							<td><?= $dado->ven_sexo ?></td>
+							<td><?= $dado->ven_email ?></td>							
 							<td class="text-center">																						
-								<button type="button" onclick="editarCliente('mostrar',  <?= $dado->cli_codigo ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-								<button type="button" onclick="removerCliente('mostrar', <?= $dado->cli_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+								<button type="button" onclick="editarVendedores('mostrar',  <?= $dado->ven_codigo ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+								<button type="button" onclick="removerVendedores('mostrar', <?= $dado->ven_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 							</td>
 						</tr>							
 					<?php } ?>
@@ -61,7 +59,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-dark text-white">
-					<h5 class="modal-title" id="modal_cadastro_title">Cadastro de cliente</h5>
+					<h5 class="modal-title" id="modal_cadastro_title">Cadastro de vendedores</h5>
 					<button onclick="limparCadastro();" type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -69,30 +67,30 @@
 				<div class="modal-body">
 					<form id="formulario_cadastro">
 						<div class="form-group">
-							<label for="cli_nome">Nome</label>
-							<input type="text" class="form-control para_cadastrar" id="cli_nome" name="cli_nome" placeholder="Informe o seu nome">							
+							<label for="ven_nome">Nome</label>
+							<input type="text" class="form-control para_cadastrar" id="ven_nome" name="ven_nome" placeholder="Informe o seu nome">							
 						</div>
 						<div class="form-group">
-							<label for="cli_cpf">CPF</label>
-							<input type="text" class="form-control para_cadastrar" id="cli_cpf" name="cli_cpf" placeholder="Informe o seu CPF">							
+							<label for="ven_cpf">CPF</label>
+							<input type="text" class="form-control para_cadastrar" id="ven_cpf" name="ven_cpf" placeholder="Informe o seu CPF">							
 						</div>
 						<div class="form-group">
-							<label for="cli_sexo">Sexo</label>
-							<select class="form-control para_cadastrar" id="cli_sexo" name="cli_sexo">
+							<label for="ven_sexo">Sexo</label>
+							<select class="form-control para_cadastrar" id="ven_sexo" name="ven_sexo">
 								<option value=""></option>
 								<option value="Masculino">Masculino</option>
 								<option value="Feminino">Feminino</option>															
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="cli_email">Email</label>
-							<input type="email" class="form-control para_cadastrar" id="cli_email" name="cli_email" placeholder="Informe o seu email">							
+							<label for="ven_email">Email</label>
+							<input type="email" class="form-control para_cadastrar" id="ven_email" name="ven_email" placeholder="Informe o seu email">							
 						</div>												
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" onclick="limparCadastro();" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times-circle"></i> Fechar</button>
-					<button type="button" onclick="cadastrarCliente();" class="btn btn-dark"><i class="fas fa-save"></i> Salvar</button>
+					<button type="button" onclick="cadastrarVendedores();" class="btn btn-dark"><i class="fas fa-save"></i> Salvar</button>
 				</div>
 			</div>
 		</div>
@@ -104,7 +102,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-dark text-white">
-					<h5 class="modal-title" id="modal_edicao_title">Edição de cliente</h5>
+					<h5 class="modal-title" id="modal_edicao_title">Edição de vendedores</h5>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -112,24 +110,24 @@
 				<div class="modal-body">
 					<form id="formulario_edicao">
 						<div class="form-group">
-							<label for="edit_cli_nome">Nome</label>
-							<input type="text" class="form-control para_editar" id="edit_cli_nome" name="cli_nome" placeholder="Informe o seu nome">							
+							<label for="edit_ven_nome">Nome</label>
+							<input type="text" class="form-control para_editar" id="edit_ven_nome" name="ven_nome" placeholder="Informe o seu nome">							
 						</div>
 						<div class="form-group">
-							<label for="edit_cli_cpf">CPF</label>
-							<input type="text" class="form-control para_editar" id="edit_cli_cpf" name="cli_cpf" placeholder="Informe o seu CPF">							
+							<label for="edit_ven_cpf">CPF</label>
+							<input type="text" class="form-control para_editar" id="edit_ven_cpf" name="ven_cpf" placeholder="Informe o seu CPF">							
 						</div>
 						<div class="form-group">
-							<label for="edit_cli_sexo">Sexo</label>
-							<select class="form-control para_editar" id="edit_cli_sexo" name="cli_sexo">
+							<label for="edit_ven_sexo">Sexo</label>
+							<select class="form-control para_editar" id="edit_ven_sexo" name="ven_sexo">
 								<option value=""></option>
 								<option value="Masculino">Masculino</option>
 								<option value="Feminino">Feminino</option>															
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="edit_cli_email">Email</label>
-							<input type="email" class="form-control para_editar" id="edit_cli_email" name="cli_email" placeholder="Informe o seu email">							
+							<label for="edit_ven_email">Email</label>
+							<input type="email" class="form-control para_editar" id="edit_ven_email" name="ven_email" placeholder="Informe o seu email">							
 						</div>												
 					</form>
 				</div>
@@ -147,7 +145,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-danger text-white">
-					<h5 class="modal-title" id="modal_exclusao_title">Deseja realmente excuir o cliente?</h5>
+					<h5 class="modal-title" id="modal_exclusao_title">Deseja realmente excuir o vendedores?</h5>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -168,7 +166,7 @@
 
 	<script>		
 
-		function cadastrarCliente() {
+		function cadastrarVendedores() {
 			var intens_cadastro = $("#formulario_cadastro").find(".para_cadastrar");
 			var dados_post = {};
 
@@ -178,13 +176,13 @@
 			});			
 
 			// Enviando dados para o beck-end
-			$.post( "<?= site_url('Clientes/cadastrar'); ?>", { dados_post: dados_post } )
+			$.post( "<?= site_url('Vendedores/cadastrar'); ?>", { dados_post: dados_post } )
 			.done(function( data ) {
 				data = JSON.parse(data);
 				if (data.menssagem == 'success') {					
 					limparCadastro();
 					$("#modal_cadastro").modal('hide');
-					dados_post['cli_codigo'] = data.id;
+					dados_post['ven_codigo'] = data.id;
 					adicionarItemTabela(dados_post);
 					mostrarMenssagem('cadastrado');					
 				} else {
@@ -193,15 +191,15 @@
 			});
 		}		
 
-		function editarCliente(opc, cli_codigo) {			
+		function editarVendedores(opc, ven_codigo) {			
 
 			var dados = {};
-			var itens_clinte = $(`#tr_item_${cli_codigo}`).find("td");									
-			dados['cli_codigo'] = $(itens_clinte[0]).text();
-			dados['cli_nome'] = $(itens_clinte[1]).text();
-			dados['cli_cpf'] = $(itens_clinte[2]).text();
-			dados['cli_sexo'] = $(itens_clinte[3]).text();
-			dados['cli_email'] = $(itens_clinte[4]).text();						
+			var itens_clinte = $(`#tr_item_${ven_codigo}`).find("td");						
+			dados['ven_codigo'] = ven_codigo;
+			dados['ven_nome'] = $(itens_clinte[0]).text();
+			dados['ven_cpf'] = $(itens_clinte[1]).text();
+			dados['ven_sexo'] = $(itens_clinte[2]).text();
+			dados['ven_email'] = $(itens_clinte[3]).text();						
 			// var dados, refere-se aos dados que estão na instancia, que são mostrados ao usuário
 							
 			// Mostra os modal de edição com os dados preenchidos
@@ -220,9 +218,9 @@
 					dados_post[$(this).attr('name')] = $(this).val();
 				});
 				// var dados_post, refere-se aos dados que foram editados pelo usuário				
-				dados_post['cli_codigo'] = dados.cli_codigo;				
+				dados_post['ven_codigo'] = dados.ven_codigo;				
 
-				$.post( "<?= site_url('Clientes/editar'); ?>", { dados_post: dados_post } )
+				$.post( "<?= site_url('Vendedores/editar'); ?>", { dados_post: dados_post } )
 				.done(function( data ) {
 					data = JSON.parse(data);
 					if (data.menssagem == 'success') {											
@@ -236,13 +234,13 @@
 			}				
 		}
 
-		function removerCliente(opc, id) {			
+		function removerVendedores(opc, id) {			
 			// Mostra o modal de remoção e seta o codigo que deve ser removido
 			if (opc == 'mostrar') {
 				$("#modal_exclusao").modal('show');
 				var botao = $("#modal_exclusao").find("#botao_remover");
 				$(botao).val(id);
-				$(botao).attr("onclick", `removerCliente('remover', ${id})`);
+				$(botao).attr("onclick", `removerVendedores('remover', ${id})`);
 			}		
 
 			// Remove o item efetivamente, tanto do banco de dados, como da tabela no front-end
@@ -250,10 +248,10 @@
 				var dados_post = {};
 				
 				// Obtendo o codigo do item que deve ser removido
-				dados_post['cli_codigo'] = id;
+				dados_post['ven_codigo'] = id;
 
 				// Enviando a requisição de remoção + dado que deve ser removido para o beck-end
-				$.post( "<?= site_url('Clientes/remover'); ?>", { dados_post: dados_post } )
+				$.post( "<?= site_url('Vendedores/remover'); ?>", { dados_post: dados_post } )
 				.done(function( data ) {
 					data = JSON.parse(data);
 					if (data.menssagem == 'success') {											
@@ -270,26 +268,25 @@
 
 		function configurarModalEdicao(dados) {
 			var botao = $("#modal_edicao").find("#botao_editar");				
-			$(botao).attr("onclick", `editarCliente('editar', ${dados.cli_codigo})`);
-			$("#edit_cli_nome").val(dados.cli_nome);
-			$("#edit_cli_cpf").val(dados.cli_cpf);
-			$("#edit_cli_sexo").val(dados.cli_sexo);
-			$("#edit_cli_email").val(dados.cli_email);
+			$(botao).attr("onclick", `editarVendedores('editar', ${dados.ven_codigo})`);
+			$("#edit_ven_nome").val(dados.ven_nome);
+			$("#edit_ven_cpf").val(dados.ven_cpf);
+			$("#edit_ven_sexo").val(dados.ven_sexo);
+			$("#edit_ven_email").val(dados.ven_email);
 			$("#modal_edicao").modal('show');
 		}
 
 		function adicionarItemTabela(dados) {
 			// Adiciona na tabela (front-end) o item desejado
 			$("#corpo_tabela").append(`
-										<tr id="tr_item_${dados.cli_codigo}">
-											<td>${dados.cli_codigo}</td>
-											<td>${dados.cli_nome}</td>
-											<td>${dados.cli_cpf}</td>
-											<td>${dados.cli_sexo}</td>
-											<td>${dados.cli_email}</td>
+										<tr id="tr_item_${dados.ven_codigo}">
+											<td>${dados.ven_nome}</td>
+											<td>${dados.ven_cpf}</td>
+											<td>${dados.ven_sexo}</td>
+											<td>${dados.ven_email}</td>
 											<td class="text-center">
-												<button type="button" onclick="editarCliente('mostrar', ${dados.cli_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-												<button type="button" onclick="removerCliente('mostrar', ${dados.cli_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+												<button type="button" onclick="editarVendedores('mostrar', ${dados.ven_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+												<button type="button" onclick="removerVendedores('mostrar', ${dados.ven_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 											</td>
 										</tr>										
 									`);
@@ -298,15 +295,14 @@
 
 		function editarItemTabela(dados) {
 			// Edita os dados que estão na tabela (front-end)			
-			$(`#tr_item_${dados.cli_codigo}`).html(`
-											<td>${dados.cli_codigo}</td>										
-											<td>${dados.cli_nome}</td>
-											<td>${dados.cli_cpf}</td>
-											<td>${dados.cli_sexo}</td>
-											<td>${dados.cli_email}</td>
+			$(`#tr_item_${dados.ven_codigo}`).html(`										
+											<td>${dados.ven_nome}</td>
+											<td>${dados.ven_cpf}</td>
+											<td>${dados.ven_sexo}</td>
+											<td>${dados.ven_email}</td>
 											<td class="text-center">
-												<button type="button" onclick="editarCliente('mostrar', ${dados.cli_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-												<button type="button" onclick="removerCliente('mostrar', ${dados.cli_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+												<button type="button" onclick="editarVendedores('mostrar', ${dados.ven_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+												<button type="button" onclick="removerVendedores('mostrar', ${dados.ven_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 											</td>																		
 									`);
 		}
