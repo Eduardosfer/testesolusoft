@@ -13,8 +13,7 @@
 
 	<hr>
 
-	<div class="row">				
-		
+	<div class="row">										
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -26,18 +25,26 @@
 				</tr>
 			</thead>
 			<tbody id="corpo_tabela">
-				<tr id="tr_item_1">
-					<td data-name="cli_nome">John</td>
-					<td data-name="cli_cpf">Doe</td>
-					<td data-name="cli_sexo">Masculino</td>
-					<td data-name="cli_email">john@example.com</td>
-					<td class="text-center">
-						<button type="button" onclick="editarCliente('mostrar', 'dados')" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-						<button type="button" onclick="removerCliente('mostrar', 1);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
-					</td>
-				</tr>							
+				<?php if (isset($clientes[0]->cli_codigo)) { ?>	
+					<?php foreach ($clientes as $dado) { ?>
+						<tr id="tr_item_<?= $dado->cli_codigo ?>">
+							<td><?= $dado->cli_nome ?></td>
+							<td><?= $dado->cli_cpf ?></td>
+							<td><?= $dado->cli_sexo ?></td>
+							<td><?= $dado->cli_email ?></td>							
+							<td class="text-center">
+								<button type="button" onclick="editarCliente('mostrar', <?= json_encode($dado) ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+								<button type="button" onclick="removerCliente('mostrar', <?= $dado->cli_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+							</td>
+						</tr>							
+					<?php } ?>
+				<?php } else { ?>					
+					<div class="text-center">
+						<div id="alert_sem_dados" class="alert alert-dark text-center" role="alert">Nenhum dado cadastrado</div>
+					</div>
+				<?php } ?>
 			</tbody>
-		</table>					
+		</table>										
 
 	</div>
 
@@ -71,8 +78,8 @@
 							<label for="cli_sexo">Sexo</label>
 							<select class="form-control para_cadastrar" id="cli_sexo" name="cli_sexo">
 								<option value=""></option>
-								<option value="masculino">Masculino</option>
-								<option value="feminino">Feminino</option>															
+								<option value="Masculino">Masculino</option>
+								<option value="Feminino">Feminino</option>															
 							</select>
 						</div>
 						<div class="form-group">
@@ -114,8 +121,8 @@
 							<label for="cli_sexo">Sexo</label>
 							<select class="form-control para_editar" id="cli_sexo" name="cli_sexo">
 								<option value=""></option>
-								<option value="masculino">Masculino</option>
-								<option value="feminino">Feminino</option>															
+								<option value="Masculino">Masculino</option>
+								<option value="Feminino">Feminino</option>															
 							</select>
 						</div>
 						<div class="form-group">
@@ -195,6 +202,7 @@
 											</td>
 										</tr>										
 									`);
+			$("#alert_sem_dados").fadeOut(1);
 		}
 
 		function editarItemTabela() {

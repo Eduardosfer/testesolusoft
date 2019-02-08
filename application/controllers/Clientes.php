@@ -25,6 +25,8 @@ class Clientes extends CI_Controller {
 		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page
 		$this->view_data['page'] = "clientes/lista";
 		$this->view_data['page_title'] = "Lista de clientes";
+		$this->load->model('Clientes_Model');
+		$this->view_data['clientes'] = $this->Clientes_Model->getData(array("cli_status" => "ativo"));
 		$this->load->view($this->main_page, $this->view_data);
 	}
 
