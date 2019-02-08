@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Descrição de Clientes
+ *
+ * @author Eduardo Sfer
+ */
+
 class Clientes extends CI_Controller {
 
 	// utilizado para receber os dados que serão enviados para as views
