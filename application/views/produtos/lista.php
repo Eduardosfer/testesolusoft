@@ -19,22 +19,24 @@
 				<tr>
 					<th>Código</th>
 					<th>Nome</th>
-					<th>Nascimento</th>
-					<th>Comissão (%)</th>					
+					<th>Cor</th>
+					<th>Tamanho</th>
+					<th>Valor</th>
 					<th class="text-center">Opções</th>
 				</tr>
 			</thead>
 			<tbody id="corpo_tabela">
-				<?php if (isset($vendedores[0]->ven_codigo)) { ?>	
-					<?php foreach ($vendedores as $dado) { ?>
-						<tr id="tr_item_<?= $dado->ven_codigo ?>">
-							<td><?= $dado->ven_codigo ?></td>
-							<td><?= $dado->ven_nome ?></td>
-							<td><?= date('d/m/Y', strtotime($dado->ven_nascimento)) ?></td>
-							<td><?= $dado->ven_comissao ?></td>							
+				<?php if (isset($produtos[0]->pro_codigo)) { ?>	
+					<?php foreach ($produtos as $dado) { ?>
+						<tr id="tr_item_<?= $dado->pro_codigo ?>">
+							<td><?= $dado->pro_codigo ?></td>
+							<td><?= $dado->pro_nome ?></td>
+							<td><?= $dado->pro_cor ?></td>
+							<td><?= $dado->pro_tamanho ?></td>
+							<td><?= $dado->pro_valor ?></td>							
 							<td class="text-center">																						
-								<button type="button" onclick="editarVendedores('mostrar',  <?= $dado->ven_codigo ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-								<button type="button" onclick="removerVendedores('mostrar', <?= $dado->ven_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+								<button type="button" onclick="editarProduto('mostrar',  <?= $dado->pro_codigo ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+								<button type="button" onclick="removerProduto('mostrar', <?= $dado->pro_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 							</td>
 						</tr>							
 					<?php } ?>
@@ -59,7 +61,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-dark text-white">
-					<h5 class="modal-title" id="modal_cadastro_title">Cadastro de vendedor</h5>
+					<h5 class="modal-title" id="modal_cadastro_title">Cadastro de produto</h5>
 					<button onclick="limparCadastro();" type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -67,22 +69,31 @@
 				<div class="modal-body">
 					<form id="formulario_cadastro">
 						<div class="form-group">
-							<label for="ven_nome">Nome</label>
-							<input type="text" class="form-control para_cadastrar" id="ven_nome" name="ven_nome" placeholder="Informe o nome do vendedor">							
+							<label for="pro_nome">Nome</label>
+							<input type="text" class="form-control para_cadastrar" id="pro_nome" name="pro_nome" placeholder="Informe o nome do produto">							
 						</div>
 						<div class="form-group">
-							<label for="ven_nascimento">Nascimento</label>
-							<input type="date" class="form-control para_cadastrar" id="ven_nascimento" name="ven_nascimento" placeholder="Informe o Nascimento do vendedor">							
+							<label for="pro_cor">Cor</label>
+							<input type="text" class="form-control para_cadastrar" id="pro_cor" name="pro_cor" placeholder="Informe a cor do produto">							
 						</div>
 						<div class="form-group">
-							<label for="ven_comissao">Comissão (%)</label>
-							<input type="number" step=".01" class="form-control para_cadastrar" id="ven_comissao" name="ven_comissao" placeholder="Informe a % de comissão do vendedor">							
-						</div>																		
+							<label for="pro_tamanho">Tamanho</label>
+							<select class="form-control para_cadastrar" id="pro_tamanho" name="pro_tamanho">
+								<option value=""></option>
+								<option value="Pequeno">Pequeno</option>
+								<option value="Médio">Médio</option>															
+								<option value="Grande">Grande</option>															
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="pro_valor">Valor</label>
+							<input type="number" step="0.01" class="form-control para_cadastrar" id="pro_valor" name="pro_valor" placeholder="Valor do produto em R$">							
+						</div>												
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" onclick="limparCadastro();" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times-circle"></i> Fechar</button>
-					<button type="button" onclick="cadastrarVendedores();" class="btn btn-dark"><i class="fas fa-save"></i> Salvar</button>
+					<button type="button" onclick="cadastrarProduto();" class="btn btn-dark"><i class="fas fa-save"></i> Salvar</button>
 				</div>
 			</div>
 		</div>
@@ -94,7 +105,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-dark text-white">
-					<h5 class="modal-title" id="modal_edicao_title">Edição de vendedor</h5>
+					<h5 class="modal-title" id="modal_edicao_title">Edição de produto</h5>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -102,17 +113,26 @@
 				<div class="modal-body">
 					<form id="formulario_edicao">
 						<div class="form-group">
-							<label for="edit_ven_nome">Nome</label>
-							<input type="text" class="form-control para_editar" id="edit_ven_nome" name="ven_nome" placeholder="Informe o nome do vendedor">							
+							<label for="edit_pro_nome">Nome</label>
+							<input type="text" class="form-control para_editar" id="edit_pro_nome" name="pro_nome" placeholder="Informe o nome do produto">							
 						</div>
 						<div class="form-group">
-							<label for="edit_ven_nascimento">Nascimento</label>
-							<input type="date" class="form-control para_editar" id="edit_ven_nascimento" name="ven_nascimento" placeholder="Informe o Nascimento do vendedor">							
+							<label for="edit_pro_cor">Cor</label>
+							<input type="text" class="form-control para_editar" id="edit_pro_cor" name="pro_cor" placeholder="Informe a cor do produto">							
 						</div>
 						<div class="form-group">
-							<label for="edit_ven_comissao">Comissão (%)</label>
-							<input type="number" step=".01" class="form-control para_editar" id="edit_ven_comissao" name="ven_comissao" placeholder="Informe a % de comissão do vendedor">							
-						</div>											
+							<label for="edit_pro_tamanho">Tamanho</label>
+							<select class="form-control para_editar" id="edit_pro_tamanho" name="pro_tamanho">
+								<option value=""></option>
+								<option value="Pequeno">Pequeno</option>
+								<option value="Médio">Médio</option>															
+								<option value="Grande">Grande</option>														
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="edit_pro_valor">Valor</label>
+							<input type="number" step="0.01" class="form-control para_editar" id="edit_pro_valor" name="pro_valor" placeholder="Informe o valor do produto em R$">							
+						</div>												
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -129,7 +149,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-danger text-white">
-					<h5 class="modal-title" id="modal_exclusao_title">Deseja realmente excuir o vendedor?</h5>
+					<h5 class="modal-title" id="modal_exclusao_title">Deseja realmente excuir o produto?</h5>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -150,7 +170,7 @@
 
 	<script>		
 
-		function cadastrarVendedores() {
+		function cadastrarProduto() {
 			var intens_cadastro = $("#formulario_cadastro").find(".para_cadastrar");
 			var dados_post = {};
 
@@ -160,13 +180,13 @@
 			});			
 
 			// Enviando dados para o beck-end
-			$.post( "<?= site_url('Vendedores/cadastrar'); ?>", { dados_post: dados_post } )
+			$.post( "<?= site_url('Produtos/cadastrar'); ?>", { dados_post: dados_post } )
 			.done(function( data ) {
 				data = JSON.parse(data);
 				if (data.menssagem == 'success') {					
 					limparCadastro();
 					$("#modal_cadastro").modal('hide');
-					dados_post['ven_codigo'] = data.id;
+					dados_post['pro_codigo'] = data.id;
 					adicionarItemTabela(dados_post);
 					mostrarMenssagem('cadastrado');					
 				} else {
@@ -175,16 +195,15 @@
 			});
 		}		
 
-		function editarVendedores(opc, ven_codigo) {			
+		function editarProduto(opc, pro_codigo) {			
 
 			var dados = {};
-			var itens_vendedor = $(`#tr_item_${ven_codigo}`).find("td");									
-			dados['ven_codigo'] = $(itens_vendedor[0]).text();
-			dados['ven_nome'] = $(itens_vendedor[1]).text();
-			dados['ven_nascimento'] = $(itens_vendedor[2]).text();
-			dados['ven_comissao'] = $(itens_vendedor[3]).text();	
-
-			console.log(dados);							
+			var itens_produto = $(`#tr_item_${pro_codigo}`).find("td");									
+			dados['pro_codigo'] = $(itens_produto[0]).text();
+			dados['pro_nome'] = $(itens_produto[1]).text();
+			dados['pro_cor'] = $(itens_produto[2]).text();
+			dados['pro_tamanho'] = $(itens_produto[3]).text();
+			dados['pro_valor'] = $(itens_produto[4]).text();						
 			// var dados, refere-se aos dados que estão na instancia, que são mostrados ao usuário
 							
 			// Mostra os modal de edição com os dados preenchidos
@@ -203,9 +222,9 @@
 					dados_post[$(this).attr('name')] = $(this).val();
 				});
 				// var dados_post, refere-se aos dados que foram editados pelo usuário				
-				dados_post['ven_codigo'] = dados.ven_codigo;				
+				dados_post['pro_codigo'] = dados.pro_codigo;				
 
-				$.post( "<?= site_url('Vendedores/editar'); ?>", { dados_post: dados_post } )
+				$.post( "<?= site_url('Produtos/editar'); ?>", { dados_post: dados_post } )
 				.done(function( data ) {
 					data = JSON.parse(data);
 					if (data.menssagem == 'success') {											
@@ -216,16 +235,16 @@
 						mostrarMenssagem('erro');
 					}
 				});				
-			}					
+			}				
 		}
 
-		function removerVendedores(opc, id) {			
+		function removerProduto(opc, id) {			
 			// Mostra o modal de remoção e seta o codigo que deve ser removido
 			if (opc == 'mostrar') {
 				$("#modal_exclusao").modal('show');
 				var botao = $("#modal_exclusao").find("#botao_remover");
 				$(botao).val(id);
-				$(botao).attr("onclick", `removerVendedores('remover', ${id})`);
+				$(botao).attr("onclick", `removerProduto('remover', ${id})`);
 			}		
 
 			// Remove o item efetivamente, tanto do banco de dados, como da tabela no front-end
@@ -233,10 +252,10 @@
 				var dados_post = {};
 				
 				// Obtendo o codigo do item que deve ser removido
-				dados_post['ven_codigo'] = id;
+				dados_post['pro_codigo'] = id;
 
 				// Enviando a requisição de remoção + dado que deve ser removido para o beck-end
-				$.post( "<?= site_url('Vendedores/remover'); ?>", { dados_post: dados_post } )
+				$.post( "<?= site_url('Produtos/remover'); ?>", { dados_post: dados_post } )
 				.done(function( data ) {
 					data = JSON.parse(data);
 					if (data.menssagem == 'success') {											
@@ -253,24 +272,26 @@
 
 		function configurarModalEdicao(dados) {
 			var botao = $("#modal_edicao").find("#botao_editar");				
-			$(botao).attr("onclick", `editarVendedores('editar', ${dados.ven_codigo})`);
-			$("#edit_ven_nome").val(dados.ven_nome);
-			$("#edit_ven_nascimento").val(dataBRToSQL(dados.ven_nascimento));
-			$("#edit_ven_comissao").val(dados.ven_comissao);			
+			$(botao).attr("onclick", `editarProduto('editar', ${dados.pro_codigo})`);
+			$("#edit_pro_nome").val(dados.pro_nome);
+			$("#edit_pro_cor").val(dados.pro_cor);
+			$("#edit_pro_tamanho").val(dados.pro_tamanho);
+			$("#edit_pro_valor").val(dados.pro_valor);
 			$("#modal_edicao").modal('show');
 		}
 
-		function adicionarItemTabela(dados) {						
+		function adicionarItemTabela(dados) {
 			// Adiciona na tabela (front-end) o item desejado
 			$("#corpo_tabela").append(`
-										<tr id="tr_item_${dados.ven_codigo}">
-											<td>${dados.ven_codigo}</td>
-											<td>${dados.ven_nome}</td>
-											<td>${dataSQLToBR(dados.ven_nascimento)}</td>
-											<td>${dados.ven_comissao}</td>											
+										<tr id="tr_item_${dados.pro_codigo}">
+											<td>${dados.pro_codigo}</td>
+											<td>${dados.pro_nome}</td>
+											<td>${dados.pro_cor}</td>
+											<td>${dados.pro_tamanho}</td>
+											<td>${dados.pro_valor}</td>
 											<td class="text-center">
-												<button type="button" onclick="editarVendedores('mostrar', ${dados.ven_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-												<button type="button" onclick="removerVendedores('mostrar', ${dados.ven_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+												<button type="button" onclick="editarProduto('mostrar', ${dados.pro_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+												<button type="button" onclick="removerProduto('mostrar', ${dados.pro_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 											</td>
 										</tr>										
 									`);
@@ -279,14 +300,15 @@
 
 		function editarItemTabela(dados) {
 			// Edita os dados que estão na tabela (front-end)			
-			$(`#tr_item_${dados.ven_codigo}`).html(`										
-											<td>${dados.ven_codigo}</td>
-											<td>${dados.ven_nome}</td>
-											<td>${dataSQLToBR(dados.ven_nascimento)}</td>
-											<td>${dados.ven_comissao}</td>
+			$(`#tr_item_${dados.pro_codigo}`).html(`
+											<td>${dados.pro_codigo}</td>										
+											<td>${dados.pro_nome}</td>
+											<td>${dados.pro_cor}</td>
+											<td>${dados.pro_tamanho}</td>
+											<td>${dados.pro_valor}</td>
 											<td class="text-center">
-												<button type="button" onclick="editarVendedores('mostrar', ${dados.ven_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
-												<button type="button" onclick="removerVendedores('mostrar', ${dados.ven_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+												<button type="button" onclick="editarProduto('mostrar', ${dados.pro_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+												<button type="button" onclick="removerProduto('mostrar', ${dados.pro_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 											</td>																		
 									`);
 		}
@@ -333,22 +355,6 @@
 				$("#menssagem_alert").fadeIn(100);
 				$("#menssagem_alert").fadeOut(3000);
 			}
-		}
-
-		function dataSQLToBR(dataA){	
-			var data = dataA.split("-");
-			var dia  = data[2].toString().padStart(2, '0');
-			var mes  = data[1].toString().padStart(2, '0');
-			var ano  = data[0].toString();						
-			return dia+"/"+mes+"/"+ano;
-		}
-
-		function dataBRToSQL(dataA){	
-			var data = dataA.split("/");
-			var dia  = data[2].toString().padStart(2, '0');
-			var mes  = data[1].toString().padStart(2, '0');
-			var ano  = data[0].toString();						
-			return dia+"-"+mes+"-"+ano;
 		}
 
 	</script>
