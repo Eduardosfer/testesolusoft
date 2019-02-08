@@ -39,4 +39,16 @@ class Clientes extends CI_Controller {
 		$retorno = json_encode(array("menssagem" => "success",  "id" => $id));
 		echo $retorno;
 	}
+
+	public function remover() {
+		$this->load->model('Clientes_Model');
+		// dados_post contem o código do cliente que deve ser apagado
+		$where = $this->input->post('dados_post');		
+		// Mudando o status para deletado. Para não aparecer mais para o usuário.
+		// Não é deletado, pois caso esse dado esteja vinculado com outra tabela iram ocorrer erros, devido a foreign key.
+		$this->Clientes_Model->updateData(array("cli_status" => "deletado"), $where);
+		// if validação		
+		$retorno = json_encode(array("menssagem" => "success"));
+		echo $retorno;
+	}
 }

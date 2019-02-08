@@ -187,6 +187,47 @@
 					mostrarMenssagem('erro');
 				}
 			});
+		}		
+
+		function editarCliente(opc, dados) {
+			if (opc == 'mostrar') {
+				$("#modal_edicao").modal('show');
+				var botao = $("#modal_edicao").find("#botao_editar");				
+				$(botao).attr("onClick", `editarCliente('editar', ${dados})`);
+			}		
+
+			if (opc == 'editar') {
+				// Remover o item
+				editarItemTabela();
+				mostrarMenssagem('editado');
+			}				
+		}
+
+		function removerCliente(opc, id) {			
+			if (opc == 'mostrar') {
+				$("#modal_exclusao").modal('show');
+				var botao = $("#modal_exclusao").find("#botao_remover");
+				$(botao).val(id);
+				$(botao).attr("onClick", `removerCliente('remover', ${id})`);
+			}		
+
+			if (opc == 'remover') {
+				var dados_post = {};
+				dados_post['cli_codigo'] = id;
+				$.post( "<?= site_url('Clientes/remover'); ?>", { dados_post: dados_post } )
+				.done(function( data ) {
+					data = JSON.parse(data);
+					if (data.menssagem == 'success') {											
+						removerItemTabela(id);
+						$("#modal_exclusao").modal('hide');
+						mostrarMenssagem('removido');			
+					} else {
+						//mostrar menssagem de erro
+						mostrarMenssagem('erro');
+					}
+				});				
+			}	
+			
 		}
 
 		function adicionarItemTabela(dados) {
@@ -219,38 +260,7 @@
 				$(this).val('');
 			});
 			$("#modal_cadastro").modal('hide');
-		}
-
-		function removerCliente(opc, id) {			
-			if (opc == 'mostrar') {
-				$("#modal_exclusao").modal('show');
-				var botao = $("#modal_exclusao").find("#botao_remover");
-				$(botao).val(id);
-				$(botao).attr("onClick", `removerCliente('remover', ${id})`);
-			}		
-
-			if (opc == 'remover') {
-				// Remover o item
-				removerItemTabela(id);
-				$("#modal_exclusao").modal('hide');
-				mostrarMenssagem('removido');
-			}	
-			
-		}
-
-		function editarCliente(opc, dados) {
-			if (opc == 'mostrar') {
-				$("#modal_edicao").modal('show');
-				var botao = $("#modal_edicao").find("#botao_editar");				
-				$(botao).attr("onClick", `editarCliente('editar', ${dados})`);
-			}		
-
-			if (opc == 'editar') {
-				// Remover o item
-				editarItemTabela();
-				mostrarMenssagem('editado');
-			}				
-		}
+		}		
 
 		function mostrarMenssagem(opc) {
 			if (opc == 'cadastrado') {
