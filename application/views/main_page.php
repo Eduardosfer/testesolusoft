@@ -15,6 +15,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?= base_url('public/template/css/simple-sidebar.css'); ?>" rel="stylesheet">	
 	<!-- icones do fontawsome -->	
 	<link rel="stylesheet" href="<?= base_url('public/fontawesome/css/all.css'); ?>">
+	<!-- jquery -->
+	<script type="text/javascript" src="<?= base_url('public/jquery-3.3.1.min.js'); ?>"></script>
+	<!-- js bootstrap -->
+	<script type="text/javascript" src="<?= base_url('public/bootstrap/js/bootstrap.js'); ?>"></script>	
+	<!-- js bootstrap nescessário para o tooltip -->
+	<script type="text/javascript" src="<?= base_url('public/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>	
 </head>
 <body>	
 	<div class="d-flex" id="wrapper">
@@ -27,6 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<a href="<?= site_url('Vendedores'); ?>" class="list-group-item list-group-item-action bg-light"><i class="fas fa-user-tie"></i> Vendedores</a>
 				<a href="<?= site_url('Produtos'); ?>" class="list-group-item list-group-item-action bg-light"><i class="fas fa-box-open"></i> Produtos</a>
 				<a href="<?= site_url('Pedidos'); ?>" class="list-group-item list-group-item-action bg-light"><i class="fas fa-tasks"></i> Pedidos</a>				
+				<a href="<?= site_url('Relatorios'); ?>" class="list-group-item list-group-item-action bg-light"><i class="fas fa-chart-pie"></i> Relatórios</a>				
 			</div>
 		</div>
 		<!-- /#sidebar-wrapper -->
@@ -41,10 +48,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- /#page-content-wrapper -->
 
 	</div>
-	<!-- /#wrapper -->
-	
-	<script type="text/javascript" src="<?= base_url('public/jquery-3.3.1.min.js'); ?>"></script>
-	<script type="text/javascript" src="<?= base_url('public/bootstrap/js/bootstrap.js'); ?>"></script>
+	<!-- /#wrapper -->			
+
+	<script>
+
+		// Inicialização do tooltip
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		});
+	</script>
 	
 </body>
 </html>
