@@ -13,7 +13,8 @@
 
 	<hr>
 
-	<div class="row">
+	<div class="row">				
+		
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -36,7 +37,12 @@
 					</td>
 				</tr>							
 			</tbody>
-		</table>
+		</table>					
+
+	</div>
+
+	<div class="row text-center">
+		<div id="menssagem_alert" style="display: none;" class="alert alert-dark text-center" role="alert"></div>
 	</div>
 
 	<!-- Modais -->
@@ -158,19 +164,37 @@
 			var dados_post = {};
 			$(intens_cadastro).each( function () {
 				dados_post[$(this).attr('name')] = $(this).val();
+			});			
+
+			$.post( "<?= site_url('Clientes/cadastrar'); ?>", { dados_post: dados_post } )
+			.done(function( data ) {
+				data = JSON.parse(data);
+				if (data.menssagem == 'success') {					
+					limparCadastro();
+					$("#modal_cadastro").modal('hide');
+					dados_post['cli_codigo'] = data.id;
+					adicionarItemTabela(dados_post);
+					mostrarMenssagem('cadastrado');					
+				} else {
+					//mostrar menssagem de erro
+					mostrarMenssagem('erro');
+				}
 			});
-			// Remover isso depois
-			console.log(dados_post);
-
-			// Depois que for feito o post, adiciona na lista o item e fecha o modal
-			adicionarItemTabela();
-			limparCadastro();
-
-			$("#modal_cadastro").modal('hide');
 		}
 
-		function adicionarItemTabela() {
-			//
+		function adicionarItemTabela(dados) {
+			$("#corpo_tabela").append(`
+										<tr id="tr_item_${dados.cli_codigo}">
+											<td>${dados.cli_nome}</td>
+											<td>${dados.cli_cpf}</td>
+											<td>${dados.cli_sexo}</td>
+											<td>${dados.cli_email}</td>
+											<td class="text-center">
+												<button type="button" onclick="editarCliente('mostrar', ${dados})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+												<button type="button" onclick="removerCliente('mostrar', ${dados.cli_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+											</td>
+										</tr>										
+									`);
 		}
 
 		function editarItemTabela() {
@@ -200,6 +224,8 @@
 			if (opc == 'remover') {
 				// Remover o item
 				removerItemTabela(id);
+				$("#modal_exclusao").modal('hide');
+				mostrarMenssagem('removido');
 			}	
 			
 		}
@@ -214,7 +240,39 @@
 			if (opc == 'editar') {
 				// Remover o item
 				editarItemTabela();
+				mostrarMenssagem('editado');
 			}				
+		}
+
+		function mostrarMenssagem(opc) {
+			if (opc == 'cadastrado') {
+				$("#menssagem_alert").text('Dados cadastrados com sucesso!');				
+				$("#menssagem_alert").removeClass('alert-danger');
+				$("#menssagem_alert").addClass('alert-dark');
+				$("#menssagem_alert").fadeIn(100);
+				$("#menssagem_alert").fadeOut(3000);
+			}
+			if (opc == 'editado') {
+				$("#menssagem_alert").text('Dados editados com sucesso!');				
+				$("#menssagem_alert").removeClass('alert-danger');
+				$("#menssagem_alert").addClass('alert-dark');
+				$("#menssagem_alert").fadeIn(100);
+				$("#menssagem_alert").fadeOut(3000);
+			}
+			if (opc == 'removido') {
+				$("#menssagem_alert").text('Dados removidos com sucesso!');				
+				$("#menssagem_alert").removeClass('alert-danger');
+				$("#menssagem_alert").addClass('alert-dark');
+				$("#menssagem_alert").fadeIn(100);
+				$("#menssagem_alert").fadeOut(3000);
+			}
+			if (opc == 'erro') {
+				$("#menssagem_alert").text('Erro ao salvar dados!');
+				$("#menssagem_alert").removeClass('alert-dark');
+				$("#menssagem_alert").addClass('alert-danger');
+				$("#menssagem_alert").fadeIn(100);
+				$("#menssagem_alert").fadeOut(3000);
+			}
 		}
 
 	</script>

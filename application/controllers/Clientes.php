@@ -27,4 +27,14 @@ class Clientes extends CI_Controller {
 		$this->view_data['page_title'] = "Lista de clientes";
 		$this->load->view($this->main_page, $this->view_data);
 	}
+
+	public function cadastrar()
+	{
+		$this->load->model('Clientes_Model');
+		$dados = $this->input->post('dados_post');					
+		$id = $this->Clientes_Model->insertData($dados);
+		// if validação		
+		$retorno = json_encode(array("menssagem" => "success",  "id" => $id));
+		echo $retorno;
+	}
 }
