@@ -266,7 +266,7 @@
 							valor_geral_comissao = parseFloat(valor_geral_comissao) + parseFloat(this.valor_total_comissao);
 							$("#corpo_tabela_comissao_vendedor").append(`
 																		<tr>																																						
-																			<td>${dataSQLToBR(this.ped_data)}</td>																																						
+																			<td>${this.ped_mes}/${this.ped_ano}</td>																																						
 																			<td>R$ ${parseFloat(this.valor_total_pedidos).toFixed(2)}</td>																			
 																			<td>R$ ${parseFloat(this.valor_total_comissao).toFixed(2)}</td>																			
 																		</tr>
