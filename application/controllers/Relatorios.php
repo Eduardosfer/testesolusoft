@@ -27,4 +27,13 @@ class Relatorios extends CI_Controller {
 		$this->load->view($this->main_page, $this->view_data);
 	}
 
+	public function obterPedidosPorPeriodo() {
+		$data_inicio = $this->input->post('data_inicio');
+		$data_fim = $this->input->post('data_fim');
+		$this->load->model("Relatorios_Model");
+		$pedidos = $this->Relatorios_Model->getPedidosPorPeriodo($data_inicio, $data_fim);
+		//if validaçoes
+		echo json_encode(array("pedidos_periodo" => $pedidos, "menssagem" => "success"));		
+	}
+
 }
