@@ -43,19 +43,21 @@ class Relatorios_Model extends MY_Model {
 		return $object->result();
 	}
 
-	public function getComissaoPorVendedor($ped_codigo_vendedor = null) {
-		$data_inicio = date('Y-m');
-		$data_fim = strtotime(date("Y-m", strtotime($data_inicio)) . " -5 month");		
+	public function getComissaoPorVendedor($ped_codigo_vendedor = null) {		
+		$data_inicio = date("Y-m", strtotime("-5 months"));
+		$data_fim = date('Y-m');
 		$this->db->select("extract(month from ped_data) as ped_mes, extract(year from ped_data) as ped_ano");				
-		$this->db->select("(select sum(pro_valor) from produtos, produtos_pedido where pro_codigo = pro_ped_codigo_produto) as valor_total_pedidos");
-		$this->db->select("(select sum(pro_valor * (vendedores.ven_comissao/100)) from produtos, produtos_pedido where pro_codigo = pro_ped_codigo_produto) as valor_total_comissao");
+		$this->db->select("sum(pro_valor) as valor_total_pedidos");
+		$this->db->select("sum(pro_valor * (vendedores.ven_comissao/100)) as valor_total_comissao");
+		$this->db->from("produtos, produtos_pedido, pedidos");
+		$this->db->where("pro_codigo = pro_ped_codigo_produto and pro_ped_codigo_pedido = ped_codigo");
 		$this->db->where("ped_codigo_vendedor", $ped_codigo_vendedor);
 		$this->db->where("ped_data >=", $data_inicio);
 		$this->db->where("ped_data <=", $data_fim);			
-		$this->db->join("vendedores", "vendedores.ven_codigo = $this->table.ped_codigo_vendedor", "LEFT");
+		$this->db->join("vendedores", "vendedores.ven_codigo = $this->table.ped_codigo_vendedor");
 		$this->db->group_by("ped_ano, ped_mes");
 		$this->db->order_by("ped_ano, ped_mes", "ASC");
-		$object = $this->db->get($this->table);
+		$object = $this->db->get();		
 		return $object->result();
 	}
 
