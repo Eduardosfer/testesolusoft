@@ -73,16 +73,54 @@
 		</div>
 
 		<div class="tab-pane fade" id="nav-total_cliente" role="tabpanel" aria-labelledby="nav-total_cliente-tab">
+			
 			<h4>Relatório de total de pedidos por cliente</h4>
+
+			<hr>
+			
+			<h5>Cliente</h5>
+
+			<form class="form-inline" id="form_busca_pedido">				
+				<label class="sr-only" for="ped_codigo_cliente">Cliente</label>
+				<select class="custom-select my-2 mr-sm-2" id="ped_codigo_cliente">
+					<?php foreach ($clientes as $cliente) { ?>					
+					<option value="<?= $cliente->cli_codigo ?>"><?= $cliente->cli_nome ?></option>
+					<?php } ?>
+				</select>				
+				<button type="button" onclick="buscarPedidosPorCliente();" class="btn btn-outline-dark"><i class="fa fa-search"></i> Buscar</button>
+			</form>
+
+			<div class="table-responsive" id="tabela_pedidos_cliente" style="display: none;">										
+				<table class="table table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th>Código</th>
+							<th>Cliente</th>
+							<th>Vendedor</th>
+							<th>Data</th>
+							<th>Observação</th>							
+							<th>Forma de pagamento</th>							
+							<th>Total de produtos</th>							
+							<th>Valor total</th>							
+						</tr>
+					</thead>
+					<tbody id="corpo_tabela_pedidos_cliente">						
+						
+					</tbody>
+				</table>												
+			</div>
+
+			<div class="text-center" id="sem_dados_pedidos_cliente" style="display: none;">
+				<div class="alert alert-dark text-center" role="alert">Nehum dado foi encontrado para essa busca</div>
+			</div>
+
 		</div>
 	</div>
 
 	<script>
 		function buscarPedidosPorPeriodo() {
-
 			var data_inicio = $("#ped_data_inicio").val();
 			var data_fim = $("#ped_data_fim").val();
-
 			$.post( "<?= site_url('Relatorios/obterPedidosPorPeriodo'); ?>", { data_inicio: data_inicio, data_fim: data_fim } )
 			.done(function( data ) {
 				data = JSON.parse(data);
@@ -90,9 +128,10 @@
 					var pedidos_periodo = data.pedidos_periodo;
 					if (pedidos_periodo.length > 0) {
 						$("#sem_dados_pedidos_periodo").fadeOut(100);
-						$("#tabela_pedidos_periodo").fadeIn(100);						
+						$("#tabela_pedidos_periodo").fadeIn(100);	
+						$("#corpo_tabela_pedidos_periodo").html("");					
 						$(pedidos_periodo).each( function () {
-							$("#corpo_tabela_pedidos_periodo").html(`
+							$("#corpo_tabela_pedidos_periodo").append(`
 																		<tr>
 																			<td>${this.ped_codigo}</td>																			
 																			<td>${this.cli_nome}</td>																			

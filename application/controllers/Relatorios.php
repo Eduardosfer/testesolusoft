@@ -21,7 +21,9 @@ class Relatorios extends CI_Controller {
 	 * Mostra a lista dos relatorios cadastrados
 	 */
 	public function index() {	
-		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page
+		$this->load->model("Clientes_Model");
+		$this->view_data['clientes'] = $this->Clientes_Model->getData(array("cli_status" => "ativo"));		 
+		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page		
 		$this->view_data['page'] = "relatorios/lista";
 		$this->view_data['page_title'] = "Relatórios";		
 		$this->load->view($this->main_page, $this->view_data);
