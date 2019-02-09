@@ -155,18 +155,26 @@
 			});	
 		}
 
+		$("#ped_codigo_cliente").change( function () {
+			buscarPedidosPorCliente();
+		});
+
 		function buscarPedidosPorCliente() {			
 			var ped_codigo_cliente = $("#ped_codigo_cliente").val();
-			$.post( "<?= site_url('Relatorios/obterPedidosPorPeriodo'); ?>", { ped_codigo_cliente: ped_codigo_cliente } )
+			$.post( "<?= site_url('Relatorios/obterPedidosPorCliente'); ?>", { ped_codigo_cliente: ped_codigo_cliente } )
 			.done(function( data ) {
 				data = JSON.parse(data);
 				if (data.menssagem == 'success') {
 					var pedidos_cliente = data.pedidos_cliente;
-					if (pedidos_cliente.length > 0) {
+					var quantidade_total = 0;
+					var valor_total = 0;
+					if (pedidos_cliente.length > 0) {						
 						$("#sem_dados_pedidos_cliente").fadeOut(100);
 						$("#tabela_pedidos_cliente").fadeIn(100);	
 						$("#corpo_tabela_pedidos_cliente").html("");					
 						$(pedidos_cliente).each( function () {
+							quantidade_total = parseInt(quantidade_total) + parseInt(this.total_produtos);
+							valor_total = parseFloat(valor_total) + parseFloat(this.valor_total_produtos);
 							$("#corpo_tabela_pedidos_cliente").append(`
 																		<tr>
 																			<td>${this.ped_codigo}</td>																			
@@ -180,6 +188,20 @@
 																		</tr>
 																	`);
 						});
+
+						$("#corpo_tabela_pedidos_cliente").append(`
+																		<tr>
+																			<td>Totais</td>																			
+																			<td></td>																			
+																			<td></td>																			
+																			<td></td>																			
+																			<td></td>																			
+																			<td></td>																			
+																			<td>${quantidade_total}</td>																			
+																			<td>R$ ${parseFloat(valor_total).toFixed(2)}</td>																			
+																		</tr>
+																	`);
+
 					} else {
 						$("#tabela_pedidos_cliente").fadeOut(100);
 						$("#sem_dados_pedidos_cliente").fadeIn(100);					
