@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Relatorios_Model extends MY_Model {	
 	
-	protected $table = '$this->table';
+	protected $table = 'pedidos';
 
 	public function __construct() {
 		parent::__construct();
