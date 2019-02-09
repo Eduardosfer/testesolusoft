@@ -74,7 +74,7 @@
 
 			<hr>
 			
-			<h5>Vendedor</h5>
+			<h5>Vendedores</h5>
 
 			<form class="form-inline" id="form_busca_pedido">				
 				<label class="sr-only" for="ped_codigo_vendedor">Vendedor</label>
@@ -91,14 +91,9 @@
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-							<th>Código</th>
-							<th>Cliente</th>
-							<th>Vendedor</th>
-							<th>Data</th>
-							<th>Observação</th>							
-							<th>Forma de pagamento</th>							
-							<th>Total de produtos</th>							
-							<th>Valor total</th>							
+							<th>Mês</th>
+							<th>Valor total de pedidos</th>
+							<th>Comissão do vendedor</th>							
 						</tr>
 					</thead>
 					<tbody id="corpo_tabela_comissao_vendedor">						
@@ -119,7 +114,7 @@
 
 			<hr>
 			
-			<h5>Cliente</h5>
+			<h5>Clientes</h5>
 
 			<form class="form-inline" id="form_busca_pedido">				
 				<label class="sr-only" for="ped_codigo_cliente">Cliente</label>
@@ -246,6 +241,49 @@
 					} else {
 						$("#tabela_pedidos_cliente").fadeOut(100);
 						$("#sem_dados_pedidos_cliente").fadeIn(100);					
+					}
+				} else {						
+					mostrarMenssagem('erro');
+				}
+			});	
+		}
+
+		function buscarComissaoPorVendedor() {			
+			var ped_codigo_vendedor = $("#ped_codigo_vendedor").val();
+			$.post( "<?= site_url('Relatorios/obterComissaoPorVendedor'); ?>", { ped_codigo_vendedor: ped_codigo_vendedor } )
+			.done(function( data ) {
+				data = JSON.parse(data);
+				if (data.menssagem == 'success') {
+					var comissao_vendedor = data.comissao_vendedor;
+					var quantidade_total = 0;
+					var valor_total = 0;
+					if (comissao_vendedor.length > 0) {						
+						$("#sem_dados_comissao_vendedor").fadeOut(100);
+						$("#tabela_comissao_vendedor").fadeIn(100);	
+						$("#corpo_tabela_comissao_vendedor").html("");					
+						$(comissao_vendedor).each( function () {
+							quantidade_total = parseInt(quantidade_total) + parseInt(this.total_produtos);
+							valor_total = parseFloat(valor_total) + parseFloat(this.valor_total_produtos);
+							$("#corpo_tabela_comissao_vendedor").append(`
+																		<tr>																																						
+																			<td>${dataSQLToBR(this.ped_data)}</td>																																						
+																			<td>R$ ${parseFloat(this.valor_total_produtos).toFixed(2)}</td>																			
+																			<td>R$ ${parseFloat(this.valor_total_produtos).toFixed(2)}</td>																			
+																		</tr>
+																	`);
+						});
+
+						$("#corpo_tabela_comissao_vendedor").append(`
+																		<tr>
+																			<td>Totais</td>																																																																												
+																			<td>${quantidade_total}</td>																			
+																			<td>R$ ${parseFloat(valor_total).toFixed(2)}</td>																			
+																		</tr>
+																	`);
+
+					} else {
+						$("#tabela_comissao_vendedor").fadeOut(100);
+						$("#sem_dados_comissao_vendedor").fadeIn(100);					
 					}
 				} else {						
 					mostrarMenssagem('erro');

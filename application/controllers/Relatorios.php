@@ -23,6 +23,8 @@ class Relatorios extends CI_Controller {
 	public function index() {	
 		$this->load->model("Clientes_Model");
 		$this->view_data['clientes'] = $this->Clientes_Model->getData(array("cli_status" => "ativo"));		 
+		$this->load->model("Vendedores_Model");
+		$this->view_data['vendedores'] = $this->Vendedores_Model->getData(array("ven_status" => "ativo"));		 
 		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page		
 		$this->view_data['page'] = "relatorios/lista";
 		$this->view_data['page_title'] = "Relatórios";		
