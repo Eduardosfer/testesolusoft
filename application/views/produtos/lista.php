@@ -1,11 +1,11 @@
 
-<div id="conteudo" style="padding: 20px;">
+<div id="conteudo">
 	
-	<div class="row">
+	<div>
 		<h2><?= $page_title ?></h2>
 	</div>
 
-	<div class="row">
+	<div>
 		<button type="button" id="cadastrar_novo" class="btn btn-outline-dark" data-toggle="modal" data-target="#modal_cadastro">
 			<i class="fas fa-plus-circle"></i> Cadastrar novo
 		</button>
@@ -13,7 +13,7 @@
 
 	<hr>
 
-	<div class="row">										
+	<div class="table-responsive">										
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -35,7 +35,7 @@
 							<td><?= $dado->pro_tamanho ?></td>
 							<td><?= $dado->pro_valor ?></td>							
 							<td class="text-center">																						
-								<button type="button" onclick="editarProduto('mostrar',  <?= $dado->pro_codigo ?>)" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
+								<button type="button" onclick="editarProduto('mostrar',  <?= $dado->pro_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 								<button type="button" onclick="removerProduto('mostrar', <?= $dado->pro_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 							</td>
 						</tr>							
@@ -50,7 +50,7 @@
 
 	</div>
 
-	<div class="row text-center">
+	<div class="text-center">
 		<div id="menssagem_alert" style="display: none;" class="alert alert-dark text-center" role="alert"></div>
 	</div>
 
@@ -171,11 +171,11 @@
 	<script>		
 
 		function cadastrarProduto() {
-			var intens_cadastro = $("#formulario_cadastro").find(".para_cadastrar");
+			var itens_cadastro = $("#formulario_cadastro").find(".para_cadastrar");
 			var dados_post = {};
 
 			// Preparando os dados para enviar para o beck-end
-			$(intens_cadastro).each( function () {
+			$(itens_cadastro).each( function () {
 				dados_post[$(this).attr('name')] = $(this).val();
 			});			
 
@@ -215,10 +215,10 @@
 			if (opc == 'editar') {			
 				
 				// Obtendo os dados editados
-				var intens_edicao = $("#formulario_edicao").find(".para_editar");
+				var itens_edicao = $("#formulario_edicao").find(".para_editar");
 				// Preparando os dados para enviar para o beck-end
 				var dados_post = {};
-				$(intens_edicao).each( function () {
+				$(itens_edicao).each( function () {
 					dados_post[$(this).attr('name')] = $(this).val();
 				});
 				// var dados_post, refere-se aos dados que foram editados pelo usuário				
@@ -319,8 +319,8 @@
 		}
 
 		function limparCadastro() {
-			var intens_cadastro = $("#formulario_cadastro").find(".para_cadastrar");			
-			$(intens_cadastro).each( function () {
+			var itens_cadastro = $("#formulario_cadastro").find(".para_cadastrar");			
+			$(itens_cadastro).each( function () {
 				$(this).val('');
 			});
 			$("#modal_cadastro").modal('hide');

@@ -43,9 +43,9 @@ class Vendedores extends CI_Controller {
 		$dados = $this->input->post('dados_post');
 		$where = array("ven_codigo" => $dados['ven_codigo']);
 		unset($dados['ven_codigo']);
-		$id = $this->Vendedores_Model->updateData($dados, $where);
+		$this->Vendedores_Model->updateData($dados, $where);
 		// if validação		
-		$retorno = json_encode(array("menssagem" => "success",  "id" => $id));
+		$retorno = json_encode(array("menssagem" => "success"));
 		echo $retorno;
 	}
 

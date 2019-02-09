@@ -23,7 +23,7 @@ class Produtos extends CI_Controller {
 	public function index() {	
 		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page
 		$this->view_data['page'] = "produtos/lista";
-		$this->view_data['page_title'] = "Lista de Produtos";
+		$this->view_data['page_title'] = "Lista de produtos";
 		$this->load->model('Produtos_Model');
 		$this->view_data['produtos'] = $this->Produtos_Model->getData(array("pro_status" => "ativo"));		
 		$this->load->view($this->main_page, $this->view_data);
@@ -43,9 +43,9 @@ class Produtos extends CI_Controller {
 		$dados = $this->input->post('dados_post');
 		$where = array("pro_codigo" => $dados['pro_codigo']);
 		unset($dados['pro_codigo']);
-		$id = $this->Produtos_Model->updateData($dados, $where);
+		$this->Produtos_Model->updateData($dados, $where);
 		// if validação		
-		$retorno = json_encode(array("menssagem" => "success",  "id" => $id));
+		$retorno = json_encode(array("menssagem" => "success"));
 		echo $retorno;
 	}
 

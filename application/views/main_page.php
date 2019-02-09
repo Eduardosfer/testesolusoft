@@ -56,6 +56,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
+
+		// Função para converção de datas
+		function dataSQLToBR(dataA){	
+			var data = dataA.split("-");
+			var dia  = data[2].toString().padStart(2, '0');
+			var mes  = data[1].toString().padStart(2, '0');
+			var ano  = data[0].toString();						
+			return dia+"/"+mes+"/"+ano;
+		}
+
+		function dataBRToSQL(dataA){	
+			var data = dataA.split("/");
+			var dia  = data[2].toString().padStart(2, '0');
+			var mes  = data[1].toString().padStart(2, '0');
+			var ano  = data[0].toString();						
+			return dia+"-"+mes+"-"+ano;
+		}
 	</script>
 	
 </body>

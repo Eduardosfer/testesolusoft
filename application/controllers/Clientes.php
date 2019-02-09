@@ -43,9 +43,9 @@ class Clientes extends CI_Controller {
 		$dados = $this->input->post('dados_post');
 		$where = array("cli_codigo" => $dados['cli_codigo']);
 		unset($dados['cli_codigo']);
-		$id = $this->Clientes_Model->updateData($dados, $where);
+		$this->Clientes_Model->updateData($dados, $where);
 		// if validação		
-		$retorno = json_encode(array("menssagem" => "success",  "id" => $id));
+		$retorno = json_encode(array("menssagem" => "success"));
 		echo $retorno;
 	}
 
