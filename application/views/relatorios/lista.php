@@ -39,7 +39,7 @@
 					<label for="ped_data_fim" class="sr-only">Data fim</label>
 					<input type="date" class="form-control" id="ped_data_fim" placeholder="Password">
 				</div>
-				<button type="button" class="btn btn-outline-dark mb-2"><i class="fa fa-search"></i> Buscar</button>
+				<button type="button" onclick="buscarPedidosPorPeriodo();" class="btn btn-outline-dark mb-2"><i class="fa fa-search"></i> Buscar</button>
 			</form>
 
 			<div class="table-responsive" id="tabela_pedidos_periodo" style="display: none;">										
@@ -76,6 +76,45 @@
 			<h4>Relatório de total de pedidos por cliente</h4>
 		</div>
 	</div>
+
+	<script>
+		function buscarPedidosPorPeriodo() {
+
+			var data_inicio = $("#ped_data_inicio").val();
+			var data_fim = $("#ped_data_fim").val();
+
+			$.post( "<?= site_url('Relatorios/obterPedidosPorPeriodo'); ?>", { data_inicio: data_inicio, data_fim: data_fim } )
+			.done(function( data ) {
+				data = JSON.parse(data);
+				if (data.menssagem == 'success') {
+					var pedidos_periodo = data.pedidos_periodo;
+					if (pedidos_periodo.length > 0) {
+						$("#sem_dados_pedidos_periodo").fadeOut(100);
+						$("#tabela_pedidos_periodo").fadeIn(100);						
+						$(pedidos_periodo).each( function () {
+							$("#corpo_tabela_pedidos_periodo").append(`
+																		<tr>
+																			<td>${this.ped_codigo}</td>																			
+																			<td>${this.cli_nome}</td>																			
+																			<td>${this.ven_nome}</td>																			
+																			<td>${dataSQLToBR(this.ped_data)}</td>																			
+																			<td>${this.ped_observacao}</td>																			
+																			<td>${this.ped_forma_pagamento}</td>																			
+																			<td>${this.total_produtos}</td>																			
+																			<td>${this.valor_total_produtos}</td>																			
+																		</tr>
+																	`);
+						});
+					} else {
+						$("#tabela_pedidos_periodo").fadeOut(100);
+						$("#sem_dados_pedidos_periodo").fadeIn(100);					
+					}
+				} else {						
+					mostrarMenssagem('erro');
+				}
+			});	
+		}
+	</script>
 	
 </div>
 

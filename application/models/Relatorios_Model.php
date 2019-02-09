@@ -26,7 +26,7 @@ class Relatorios_Model extends MY_Model {
 		$this->db->where("ped_data <=", $data_fim);
 		$this->db->join("clientes", "clientes.cli_codigo = $this->table.ped_codigo_cliente", "LEFT");		
 		$this->db->join("vendedores", "vendedores.ven_codigo = $this->table.ped_codigo_vendedor", "LEFT");
-		$object = $this->db->get($this->table, $limit, $amount);
+		$object = $this->db->get($this->table);
 		return $object->result();
 	}
 
