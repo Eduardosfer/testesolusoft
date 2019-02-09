@@ -248,6 +248,9 @@
 			});	
 		}
 
+		$("#ped_codigo_vendedor").change( function () {
+			buscarComissaoPorVendedor();
+		});
 		function buscarComissaoPorVendedor() {			
 			var ped_codigo_vendedor = $("#ped_codigo_vendedor").val();
 			$.post( "<?= site_url('Relatorios/obterComissaoPorVendedor'); ?>", { ped_codigo_vendedor: ped_codigo_vendedor } )
