@@ -83,6 +83,7 @@
 			<form class="form-inline" id="form_busca_pedido">				
 				<label class="sr-only" for="ped_codigo_cliente">Cliente</label>
 				<select class="custom-select my-2 mr-sm-2" id="ped_codigo_cliente">
+					<option value=""></option>
 					<?php foreach ($clientes as $cliente) { ?>					
 					<option value="<?= $cliente->cli_codigo ?>"><?= $cliente->cli_nome ?></option>
 					<?php } ?>
@@ -147,6 +148,41 @@
 					} else {
 						$("#tabela_pedidos_periodo").fadeOut(100);
 						$("#sem_dados_pedidos_periodo").fadeIn(100);					
+					}
+				} else {						
+					mostrarMenssagem('erro');
+				}
+			});	
+		}
+
+		function buscarPedidosPorCliente() {			
+			var ped_codigo_cliente = $("#ped_codigo_cliente").val();
+			$.post( "<?= site_url('Relatorios/obterPedidosPorPeriodo'); ?>", { ped_codigo_cliente: ped_codigo_cliente } )
+			.done(function( data ) {
+				data = JSON.parse(data);
+				if (data.menssagem == 'success') {
+					var pedidos_cliente = data.pedidos_cliente;
+					if (pedidos_cliente.length > 0) {
+						$("#sem_dados_pedidos_cliente").fadeOut(100);
+						$("#tabela_pedidos_cliente").fadeIn(100);	
+						$("#corpo_tabela_pedidos_cliente").html("");					
+						$(pedidos_cliente).each( function () {
+							$("#corpo_tabela_pedidos_cliente").append(`
+																		<tr>
+																			<td>${this.ped_codigo}</td>																			
+																			<td>${this.cli_nome}</td>																			
+																			<td>${this.ven_nome}</td>																			
+																			<td>${dataSQLToBR(this.ped_data)}</td>																			
+																			<td>${this.ped_observacao}</td>																			
+																			<td>${this.ped_forma_pagamento}</td>																			
+																			<td>${this.total_produtos}</td>																			
+																			<td>R$ ${parseFloat(this.valor_total_produtos).toFixed(2)}</td>																			
+																		</tr>
+																	`);
+						});
+					} else {
+						$("#tabela_pedidos_cliente").fadeOut(100);
+						$("#sem_dados_pedidos_cliente").fadeIn(100);					
 					}
 				} else {						
 					mostrarMenssagem('erro');
