@@ -1,0 +1,30 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Descrição de Relatorios
+ *
+ * @author Eduardo Sfer
+ */
+
+class Relatorios extends CI_Controller {
+
+	// utilizado para receber os dados que serão enviados para as views
+	private $view_data = array();
+
+	// Caminho da página principal (contem o codigo HTML principal) onde serão incluidas as páginas contendo os dados especificos de cada CRUD
+	private $main_page = "main_page";
+
+	/**
+	 * Controle de relatorios.
+	 *
+	 * Mostra a lista dos relatorios cadastrados
+	 */
+	public function index() {	
+		// Indice 'page' é utilizado para informar qual página deve ser incluida na main_page
+		$this->view_data['page'] = "relatorios/lista";
+		$this->view_data['page_title'] = "Relatórios";		
+		$this->load->view($this->main_page, $this->view_data);
+	}
+
+}
