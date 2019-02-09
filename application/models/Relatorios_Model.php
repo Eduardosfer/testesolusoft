@@ -20,8 +20,8 @@ class Relatorios_Model extends MY_Model {
 		$this->db->select("pedidos.*, pedidos.ped_codigo as ped_codigo_atual");
 		$this->db->select("clientes.cli_nome");
 		$this->db->select("vendedores.ven_nome");
-		$this->db->select("(select count(ped_pro_codigo) from pedidos_produto where ped_pro_codigo_pedido = ped_codigo_atual) as total_produtos");
-		$this->db->select("(select sum(pro_valor) from produtos, pedidos_produto where pro_codigo = ped_pro_codigo_produto and ped_pro_codigo_pedido = ped_codigo_atual) as valor_total_produtos");
+		$this->db->select("(select count(pro_ped_codigo) from produtos_pedido where pro_ped_codigo_pedido = ped_codigo_atual) as total_produtos");
+		$this->db->select("(select sum(pro_valor) from produtos, produtos_pedido where pro_codigo = pro_ped_codigo_produto and pro_ped_codigo_pedido = ped_codigo_atual) as valor_total_produtos");
 		$this->db->where("ped_data >=", $data_inicio);
 		$this->db->where("ped_data <=", $data_fim);
 		$this->db->join("clientes", "clientes.cli_codigo = $this->table.ped_codigo_cliente", "LEFT");		
