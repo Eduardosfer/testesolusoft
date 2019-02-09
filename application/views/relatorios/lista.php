@@ -42,7 +42,7 @@
 				<button type="button" class="btn btn-outline-dark mb-2"><i class="fa fa-search"></i> Buscar</button>
 			</form>
 
-			<div class="table-responsive" id="tabela_pedidos_periodo" style="display: none;">										
+			<div class="table-responsive" id="tabela_pedidos_periodo" style="display: ;">										
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
