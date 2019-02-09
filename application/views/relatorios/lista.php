@@ -264,7 +264,10 @@
 						$("#sem_dados_comissao_vendedor").fadeOut(100);
 						$("#tabela_comissao_vendedor").fadeIn(100);	
 						$("#corpo_tabela_comissao_vendedor").html("");					
-						$(comissao_vendedor).each( function () {
+						$(comissao_vendedor).each( function () {							
+							if (this.ped_mes.length == 1) {
+								this.ped_mes = "0" + this.ped_mes;
+							}
 							valor_geral_pedidos = parseFloat(valor_geral_pedidos) + parseFloat(this.valor_total_pedidos);
 							valor_geral_comissao = parseFloat(valor_geral_comissao) + parseFloat(this.valor_total_comissao);
 							$("#corpo_tabela_comissao_vendedor").append(`
