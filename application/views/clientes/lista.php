@@ -79,7 +79,7 @@
 						<div class="form-group">
 							<label for="cli_sexo">Sexo</label>
 							<select class="form-control para_cadastrar" id="cli_sexo" name="cli_sexo">
-								<option value=""></option>
+								<option value="">Selecione o sexo</option>
 								<option value="Masculino">Masculino</option>
 								<option value="Feminino">Feminino</option>															
 							</select>
@@ -122,7 +122,7 @@
 						<div class="form-group">
 							<label for="edit_cli_sexo">Sexo</label>
 							<select class="form-control para_editar" id="edit_cli_sexo" name="cli_sexo">
-								<option value=""></option>
+								<option value="">Selecione a sexo</option>
 								<option value="Masculino">Masculino</option>
 								<option value="Feminino">Feminino</option>															
 							</select>

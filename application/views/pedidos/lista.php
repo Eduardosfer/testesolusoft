@@ -77,7 +77,7 @@
 									<div class="form-group">
 										<label for="ped_codigo_cliente">Cliente</label>
 										<select class="form-control para_cadastrar" id="ped_codigo_cliente" name="ped_codigo_cliente">
-											<option value=""></option>
+											<option value="">Selecione um cliente</option>
 											<?php foreach ($clientes as $cliente) { ?>
 											<option value="<?= $cliente->cli_codigo ?>"><?= $cliente->cli_nome ?></option>
 										<?php } ?>																							
@@ -89,7 +89,7 @@
 								<div class="form-group">
 									<label for="ped_codigo_vendedor">Vendedor</label>
 									<select class="form-control para_cadastrar" id="ped_codigo_vendedor" name="ped_codigo_vendedor">
-										<option value=""></option>
+										<option value="">Selecione um vendedor</option>
 										<?php foreach ($vendedores as $vendedor) { ?>
 											<option value="<?= $vendedor->ven_codigo ?>"><?= $vendedor->ven_nome ?></option>
 										<?php } ?>																									
@@ -101,7 +101,7 @@
 								<div class="form-group">
 									<label for="ped_forma_pagamento">Forma de pagamento</label>
 									<select class="form-control para_cadastrar" id="ped_forma_pagamento" name="ped_forma_pagamento">
-										<option value=""></option>										
+										<option value="">Selecione a forma de pagamento</option>										
 										<option value="Dinheiro">Dinheiro</option>																															
 										<option value="Cartão">Cartão</option>																															
 										<option value="Cheque">Cheque</option>																															
@@ -133,7 +133,7 @@
 								<label for="produto">Produtos</label>
 								<div class="input-group">
 									<select class="form-control" id="produto">
-										<option value=""></option>
+										<option value="">Selecione um produto</option>
 										<?php foreach ($produtos as $produto) { ?>
 											<option value="<?= $produto->pro_codigo ?>"><?= $produto->pro_codigo . " | " . $produto->pro_nome . " | " . $produto->pro_cor . " | " . $produto->pro_tamanho . " | R$" . $produto->pro_valor ?></option>
 										<?php } ?>																							
@@ -183,7 +183,7 @@
 									<div class="form-group">
 										<label for="edit_ped_codigo_cliente">Cliente</label>
 										<select class="form-control para_editar" id="edit_ped_codigo_cliente" name="ped_codigo_cliente">
-											<option value=""></option>
+											<option value="">Selecione um cliente</option>
 											<?php foreach ($clientes as $cliente) { ?>
 											<option value="<?= $cliente->cli_codigo ?>"><?= $cliente->cli_nome ?></option>
 										<?php } ?>																							
@@ -195,7 +195,7 @@
 								<div class="form-group">
 									<label for="edit_ped_codigo_vendedor">Vendedor</label>
 									<select class="form-control para_editar" id="edit_ped_codigo_vendedor" name="ped_codigo_vendedor">
-										<option value=""></option>
+										<option value="">Selecione um vendedor</option>
 										<?php foreach ($vendedores as $vendedor) { ?>
 											<option value="<?= $vendedor->ven_codigo ?>"><?= $vendedor->ven_nome ?></option>
 										<?php } ?>																									
@@ -207,7 +207,7 @@
 								<div class="form-group">
 									<label for="edit_ped_forma_pagamento">Forma de pagamento</label>
 									<select class="form-control para_editar" id="edit_ped_forma_pagamento" name="ped_forma_pagamento">
-										<option value=""></option>										
+										<option value="">Selecione a forma de pagamento</option>										
 										<option value="Dinheiro">Dinheiro</option>																															
 										<option value="Cartão">Cartão</option>																															
 										<option value="Cheque">Cheque</option>																															
@@ -239,7 +239,7 @@
 								<label for="produto_edicao">Produtos</label>
 								<div class="input-group">
 									<select class="form-control" id="produto_edicao">
-										<option value=""></option>
+										<option value="">Selecione um produto</option>
 										<?php foreach ($produtos as $produto) { ?>
 											<option value="<?= $produto->pro_codigo ?>"><?= $produto->pro_codigo . " | " . $produto->pro_nome . " | " . $produto->pro_cor . " | " . $produto->pro_tamanho . " | R$" . $produto->pro_valor ?></option>
 										<?php } ?>																							

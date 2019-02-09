@@ -79,7 +79,7 @@
 						<div class="form-group">
 							<label for="pro_tamanho">Tamanho</label>
 							<select class="form-control para_cadastrar" id="pro_tamanho" name="pro_tamanho">
-								<option value=""></option>
+								<option value="">Selecione um tamanho</option>
 								<option value="Pequeno">Pequeno</option>
 								<option value="Médio">Médio</option>															
 								<option value="Grande">Grande</option>															
@@ -123,7 +123,7 @@
 						<div class="form-group">
 							<label for="edit_pro_tamanho">Tamanho</label>
 							<select class="form-control para_editar" id="edit_pro_tamanho" name="pro_tamanho">
-								<option value=""></option>
+								<option value="">Selecione um tamanho</option>
 								<option value="Pequeno">Pequeno</option>
 								<option value="Médio">Médio</option>															
 								<option value="Grande">Grande</option>														
