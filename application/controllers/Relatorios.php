@@ -48,4 +48,12 @@ class Relatorios extends CI_Controller {
 		echo json_encode(array("pedidos_cliente" => $pedidos, "menssagem" => "success"));		
 	}
 
+	public function obterComissaoPorVendedor() {
+		$ped_codigo_vendedor = $this->input->post('ped_codigo_vendedor');		
+		$this->load->model("Relatorios_Model");
+		$pedidos = $this->Relatorios_Model->getPedidosPorCliente($ped_codigo_vendedor);
+		//if validaçoes
+		echo json_encode(array("comissao_vendedor" => $pedidos, "menssagem" => "success"));		
+	}
+
 }
