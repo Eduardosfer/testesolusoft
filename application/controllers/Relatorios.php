@@ -38,4 +38,12 @@ class Relatorios extends CI_Controller {
 		echo json_encode(array("pedidos_periodo" => $pedidos, "menssagem" => "success"));		
 	}
 
+	public function obterPedidosPorCliente() {
+		$ped_codigo_cliente = $this->input->post('ped_codigo_cliente');		
+		$this->load->model("Relatorios_Model");
+		$pedidos = $this->Relatorios_Model->getPedidosPorCliente($ped_codigo_cliente);
+		//if validaçoes
+		echo json_encode(array("pedidos_cliente" => $pedidos, "menssagem" => "success"));		
+	}
+
 }
