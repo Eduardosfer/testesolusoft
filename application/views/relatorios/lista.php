@@ -69,7 +69,48 @@
 		</div>
 
 		<div class="tab-pane fade" id="nav-comissao" role="tabpanel" aria-labelledby="nav-comissao-tab">
+
 			<h4>Relatório de comissão por vendedor nos ultimos 6 meses</h4>
+
+			<hr>
+			
+			<h5>Vendedor</h5>
+
+			<form class="form-inline" id="form_busca_pedido">				
+				<label class="sr-only" for="ped_codigo_vendedor">Vendedor</label>
+				<select class="custom-select my-2 mr-sm-2" id="ped_codigo_vendedor">
+					<option value="">Selecione um vendedor</option>
+					<?php foreach ($vendedores as $vendedor) { ?>					
+					<option value="<?= $vendedor->ven_codigo ?>"><?= $vendedor->ven_nome ?></option>
+					<?php } ?>
+				</select>				
+				<button type="button" onclick="buscarComissaoPorVendedor();" class="btn btn-outline-dark"><i class="fa fa-search"></i> Buscar</button>
+			</form>
+
+			<div class="table-responsive" id="tabela_comissao_vendedor" style="display: none;">										
+				<table class="table table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th>Código</th>
+							<th>Cliente</th>
+							<th>Vendedor</th>
+							<th>Data</th>
+							<th>Observação</th>							
+							<th>Forma de pagamento</th>							
+							<th>Total de produtos</th>							
+							<th>Valor total</th>							
+						</tr>
+					</thead>
+					<tbody id="corpo_tabela_comissao_vendedor">						
+						
+					</tbody>
+				</table>												
+			</div>
+
+			<div class="text-center" id="sem_dados_comissao_vendedor" style="display: none;">
+				<div class="alert alert-dark text-center" role="alert">Nehum dado foi encontrado para essa busca</div>
+			</div>
+
 		</div>
 
 		<div class="tab-pane fade" id="nav-total_cliente" role="tabpanel" aria-labelledby="nav-total_cliente-tab">
@@ -83,7 +124,7 @@
 			<form class="form-inline" id="form_busca_pedido">				
 				<label class="sr-only" for="ped_codigo_cliente">Cliente</label>
 				<select class="custom-select my-2 mr-sm-2" id="ped_codigo_cliente">
-					<option value=""></option>
+					<option value="">Selecione um cliente</option>
 					<?php foreach ($clientes as $cliente) { ?>					
 					<option value="<?= $cliente->cli_codigo ?>"><?= $cliente->cli_nome ?></option>
 					<?php } ?>
