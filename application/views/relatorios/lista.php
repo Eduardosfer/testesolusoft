@@ -92,7 +92,7 @@
 						$("#sem_dados_pedidos_periodo").fadeOut(100);
 						$("#tabela_pedidos_periodo").fadeIn(100);						
 						$(pedidos_periodo).each( function () {
-							$("#corpo_tabela_pedidos_periodo").append(`
+							$("#corpo_tabela_pedidos_periodo").html(`
 																		<tr>
 																			<td>${this.ped_codigo}</td>																			
 																			<td>${this.cli_nome}</td>																			
