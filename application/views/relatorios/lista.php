@@ -101,7 +101,7 @@
 																			<td>${this.ped_observacao}</td>																			
 																			<td>${this.ped_forma_pagamento}</td>																			
 																			<td>${this.total_produtos}</td>																			
-																			<td>${this.valor_total_produtos}</td>																			
+																			<td>R$ ${parseFloat(this.valor_total_produtos).toFixed(2)}</td>																			
 																		</tr>
 																	`);
 						});
