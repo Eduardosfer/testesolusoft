@@ -255,20 +255,20 @@
 				data = JSON.parse(data);
 				if (data.menssagem == 'success') {
 					var comissao_vendedor = data.comissao_vendedor;
-					var quantidade_total = 0;
-					var valor_total = 0;
+					var valor_geral_pedidos = 0;
+					var valor_geral_comissao = 0;
 					if (comissao_vendedor.length > 0) {						
 						$("#sem_dados_comissao_vendedor").fadeOut(100);
 						$("#tabela_comissao_vendedor").fadeIn(100);	
 						$("#corpo_tabela_comissao_vendedor").html("");					
 						$(comissao_vendedor).each( function () {
-							quantidade_total = parseInt(quantidade_total) + parseInt(this.total_produtos);
-							valor_total = parseFloat(valor_total) + parseFloat(this.valor_total_produtos);
+							valor_geral_pedidos = parseFloat(valor_geral_pedidos) + parseFloat(this.valor_total_pedidos);
+							valor_geral_comissao = parseFloat(valor_geral_comissao) + parseFloat(this.valor_total_comissao);
 							$("#corpo_tabela_comissao_vendedor").append(`
 																		<tr>																																						
 																			<td>${dataSQLToBR(this.ped_data)}</td>																																						
-																			<td>R$ ${parseFloat(this.valor_total_produtos).toFixed(2)}</td>																			
-																			<td>R$ ${parseFloat(this.valor_total_produtos).toFixed(2)}</td>																			
+																			<td>R$ ${parseFloat(this.valor_total_pedidos).toFixed(2)}</td>																			
+																			<td>R$ ${parseFloat(this.valor_total_comissao).toFixed(2)}</td>																			
 																		</tr>
 																	`);
 						});
@@ -276,8 +276,8 @@
 						$("#corpo_tabela_comissao_vendedor").append(`
 																		<tr>
 																			<td>Totais</td>																																																																												
-																			<td>${quantidade_total}</td>																			
-																			<td>R$ ${parseFloat(valor_total).toFixed(2)}</td>																			
+																			<td>R$ ${parseFloat(valor_geral_pedidos).toFixed(2)}</td>																			
+																			<td>R$ ${parseFloat(valor_geral_comissao).toFixed(2)}</td>																			
 																		</tr>
 																	`);
 
