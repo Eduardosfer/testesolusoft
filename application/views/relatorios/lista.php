@@ -74,14 +74,14 @@
 
 			<hr>
 			
-			<h5>Vendedores</h5>
+			<h5>Vendedores/Comissão</h5>
 
 			<form class="form-inline" id="form_busca_pedido">				
 				<label class="sr-only" for="ped_codigo_vendedor">Vendedor</label>
 				<select class="custom-select my-2 mr-sm-2" id="ped_codigo_vendedor">
 					<option value="">Selecione um vendedor</option>
 					<?php foreach ($vendedores as $vendedor) { ?>					
-					<option value="<?= $vendedor->ven_codigo ?>"><?= $vendedor->ven_nome ?></option>
+					<option value="<?= $vendedor->ven_codigo ?>"><?= $vendedor->ven_nome . " | " . $vendedor->ven_comissao . "%" ?></option>
 					<?php } ?>
 				</select>				
 				<button type="button" onclick="buscarComissaoPorVendedor();" class="btn btn-outline-dark"><i class="fa fa-search"></i> Buscar</button>
