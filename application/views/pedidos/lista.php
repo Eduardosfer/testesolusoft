@@ -22,7 +22,7 @@
 					<th>Vendedor</th>
 					<th>Data</th>
 					<th>Observação</th>
-					<th>Forma de Pagamento</th>
+					<th>Forma de pagamento</th>
 					<th class="text-center">Opções</th>
 				</tr>
 			</thead>
@@ -99,7 +99,7 @@
 
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="ped_forma_pagamento">Forma de Pagamento</label>
+									<label for="ped_forma_pagamento">Forma de pagamento</label>
 									<select class="form-control para_cadastrar" id="ped_forma_pagamento" name="ped_forma_pagamento">
 										<option value=""></option>										
 										<option value="Dinheiro">Dinheiro</option>																															
@@ -205,7 +205,7 @@
 
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="edit_ped_forma_pagamento">Forma de Pagamento</label>
+									<label for="edit_ped_forma_pagamento">Forma de pagamento</label>
 									<select class="form-control para_editar" id="edit_ped_forma_pagamento" name="ped_forma_pagamento">
 										<option value=""></option>										
 										<option value="Dinheiro">Dinheiro</option>																															
