@@ -492,6 +492,10 @@
 				});	
 			}
 		}
+
+		function imprimirPedido(ped_codigo) {
+			window.open(`<?= site_url('Pedidos/imprimirPedido/') ?>${ped_codigo}`);
+		}
 		
 		function adicionarItemPedido(opc) {
 			if (opc == 'cadastro') {
