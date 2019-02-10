@@ -485,7 +485,7 @@
 					data = JSON.parse(data);
 					if (data.menssagem == 'success') {				
 						$("#modal_enviar_pedido").modal('hide');
-						mostrarMenssagem('email');	
+						mostrarMenssagem('email');						
 					} else {						
 						mostrarMenssagem('erro');
 					}

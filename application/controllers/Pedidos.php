@@ -116,6 +116,11 @@ class Pedidos extends CI_Controller {
 
 	public function enviarEmail() {
 		$where = array("ped_codigo" => $this->input->post('ped_codigo'));				
+		$this->load->model('Pedidos_Model');
+		$pedido_edicao = $this->Pedidos_Model->getOneData($where);
+		// Obtendo os itens do pedido
+		$this->load->model('Produtos_Pedido_Model');
+		$pedido_edicao->itens_do_pedido = $this->Produtos_Pedido_Model->getDataJoined(array("pro_ped_codigo_pedido" => $where['ped_codigo']));		
 		// if validação
 		echo json_encode(array("menssagem" => "success"));
 	}
