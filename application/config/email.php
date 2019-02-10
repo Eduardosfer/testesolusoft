@@ -7,6 +7,6 @@ $config['smtp_user'] = 'emailparatestemail@gmail.com';
 $config['smtp_pass'] = '@e12345678';
 $config['protocol']  = 'smtp';
 $config['validate']  = TRUE;
-$config['mailtype']  = 'text';
+$config['mailtype']  = 'html';
 $config['charset']   = 'utf-8';
 $config['newline']   = "\r\n";
