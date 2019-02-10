@@ -629,44 +629,7 @@
 			$(".div_itens_do_pedido").remove();
 			$("#modal_cadastro").modal('hide');
 		}		
-
-		function mostrarMenssagem(opc) {
-			if (opc == 'cadastrado') {
-				$("#menssagem_alert").text('Dados cadastrados com sucesso!');				
-				$("#menssagem_alert").removeClass('alert-danger');
-				$("#menssagem_alert").addClass('alert-dark');
-				$("#menssagem_alert").fadeIn(100);
-				$("#menssagem_alert").fadeOut(3000);
-			}
-			if (opc == 'editado') {
-				$("#menssagem_alert").text('Dados editados com sucesso!');				
-				$("#menssagem_alert").removeClass('alert-danger');
-				$("#menssagem_alert").addClass('alert-dark');
-				$("#menssagem_alert").fadeIn(100);
-				$("#menssagem_alert").fadeOut(3000);
-			}
-			if (opc == 'removido') {
-				$("#menssagem_alert").text('Dados removidos com sucesso!');				
-				$("#menssagem_alert").removeClass('alert-danger');
-				$("#menssagem_alert").addClass('alert-dark');
-				$("#menssagem_alert").fadeIn(100);
-				$("#menssagem_alert").fadeOut(3000);
-			}
-			if (opc == 'email') {
-				$("#menssagem_alert").text('Email enviado com sucesso!');				
-				$("#menssagem_alert").removeClass('alert-danger');
-				$("#menssagem_alert").addClass('alert-dark');
-				$("#menssagem_alert").fadeIn(100);
-				$("#menssagem_alert").fadeOut(3000);
-			}
-			if (opc == 'erro') {
-				$("#menssagem_alert").text('Erro ao salvar dados!');
-				$("#menssagem_alert").removeClass('alert-dark');
-				$("#menssagem_alert").addClass('alert-danger');
-				$("#menssagem_alert").fadeIn(100);
-				$("#menssagem_alert").fadeOut(3000);
-			}
-		}		
+				
 	</script>
 	
 </div>
