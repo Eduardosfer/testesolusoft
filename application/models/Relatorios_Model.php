@@ -52,8 +52,8 @@ class Relatorios_Model extends MY_Model {
 		$this->db->from("produtos, produtos_pedido, pedidos");
 		$this->db->where("pro_codigo = pro_ped_codigo_produto and pro_ped_codigo_pedido = ped_codigo");
 		$this->db->where("ped_codigo_vendedor", $ped_codigo_vendedor);
-		$this->db->where("ped_data >=", $data_inicio);
-		$this->db->where("ped_data <=", $data_fim);			
+		$this->db->where("ped_data >=", $data_inicio . "-01");
+		$this->db->where("ped_data <=", $data_fim. "-31");
 		$this->db->join("vendedores", "vendedores.ven_codigo = $this->table.ped_codigo_vendedor");
 		$this->db->group_by("ped_ano, ped_mes");
 		$this->db->order_by("ped_ano, ped_mes", "ASC");
