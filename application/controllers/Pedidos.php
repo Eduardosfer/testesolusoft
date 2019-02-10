@@ -132,69 +132,12 @@ class Pedidos extends CI_Controller {
 		$this->email->subject("Pedido nº $pedido->ped_codigo");
 		// $this->email->reply_to("naorespondaesseemail@gmail.com");
 		// $this->email->cc('copia@dominio.com');
-		// $this->email->bcc('copia_oculta@dominio.com');		
-		$menssagem = $this->configurarMenssagem($pedido);		
+		// $this->email->bcc('copia_oculta@dominio.com');
+		$this->view_data['pedido'] = $pedido;
+		$menssagem = $this->load->view('pedidos/dados_pedido', $this->view_data, true);		
 		$this->email->to($pedido->cli_email);
 		$this->email->message($menssagem);
 		$this->email->send();
-	}
-
-	public function configurarMenssagem($pedido = null) {
-		$data = date('d/m/Y', strtotime($pedido->ped_data));
-		$itens_pedido = "";
-		foreach ($pedido->itens_do_pedido as $item) {
-			$itens_pedido .= "<tr><td>$item->pro_codigo</td><td>$item->pro_nome</td><td>$item->pro_cor</td><td>$item->pro_tamanho</td><td>R$ $item->pro_valor</td></tr>";
-		}
-		$menssagem = "
-						<html>
-							<head>
-								<style>
-									table {
-										padding: 10px;
-										font-size: 15px;
-									}
-									td {
-										padding: 5px;
-									}														
-								</style>
-							</head>
-							<body>
-								<h3>Dados do pedido $pedido->ped_codigo</h3>
-								<table>
-									<tbody>
-										<tr>
-											<td>Cliente: $pedido->cli_nome</td>
-											<td>Vendedor: $pedido->ven_nome</td>
-										</tr>
-										<tr>
-											<td>Forma de pagamento: $pedido->ped_forma_pagamento</td>
-											<td>Data do pedido: $data</td>
-										</tr>
-										<tr>
-											<td>Observação: $pedido->ped_observacao</td>			
-										</tr>
-									</tbody>
-								</table>
-								<h3>Itens do pedido</h3>
-								<table>
-									<thead>
-										<tr>
-											<th>Código</th>
-											<th>Nóme</th>
-											<th>Cor</th>
-											<th>Tamanho</th>
-											<th>Valor</th>
-										</tr>
-									</thead>
-									<tbody>
-										$itens_pedido
-									</tbody>
-								</table>
-							</body>
-						</html>						
-					";
-
-		return $menssagem;
 	}	
 
 	public function imprimirPedido($ped_codigo) {
