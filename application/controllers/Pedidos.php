@@ -104,4 +104,19 @@ class Pedidos extends CI_Controller {
 		// if validação
 		echo json_encode(array("pedido_edicao" => $pedido_edicao, "menssagem" => "success"));
 	}
+
+	public function obterEmailCliente() {
+		$where = array("ped_codigo" => $this->input->post('ped_codigo'));
+		$fields = "cli_email, cli_nome";
+		$this->load->model('Pedidos_Model');
+		$cliente = $this->Pedidos_Model->getOneDataJoined($where, $fields);		
+		// if validação
+		echo json_encode(array("cliente" => $cliente, "menssagem" => "success"));
+	}
+
+	public function enviarEmail() {
+		$where = array("ped_codigo" => $this->input->post('ped_codigo'));				
+		// if validação
+		echo json_encode(array("menssagem" => "success"));
+	}
 }

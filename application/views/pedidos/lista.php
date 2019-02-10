@@ -307,7 +307,7 @@
 					<div class="row">			
 						<div class="col-md-12">
 							<div class="form-group">
-								<label for="enviar_cli_email">Deseja enviar o pedido para o seguinte email:</label>
+								<label id="label_cli_email" for="enviar_cli_email">Deseja enviar o pedido para o seguinte email:</label>
 								<input readonly="true" type="email" class="form-control" id="enviar_cli_email" name="enviar_cli_email">							
 							</div>
 						</div>
@@ -461,12 +461,16 @@
 		function enviarPedido(opc, ped_codigo) {
 			
 			if (opc == 'mostrar') {
+				var botao = $("#modal_enviar_pedido").find("#botao_enviar_pedido");				
+				$(botao).attr("onclick", `enviarPedido('enviar', ${ped_codigo})`);
 				$.post( "<?= site_url('Pedidos/obterEmailCliente'); ?>", { ped_codigo: ped_codigo } )
 				.done(function( data ) {
 					data = JSON.parse(data);
-					if (data.menssagem == 'success') {											
-						$("#enviar_cli_email").val(data.cli_email);
-						$("#modal_enviar_pedido").modal("show");		
+					if (data.menssagem == 'success') {				
+						var cliente = data.cliente;							
+						$("#label_cli_email").text("Deseja enviar o email para: "+ cliente.cli_nome);
+						$("#enviar_cli_email").val(cliente.cli_email);
+						$("#modal_enviar_pedido").modal("show");						
 					} else {						
 						mostrarMenssagem('erro');
 					}
@@ -474,7 +478,18 @@
 			}
 
 			if (opc == 'enviar') {
-
+				var botao = $("#modal_enviar_pedido").find("#botao_enviar_pedido");											
+				$(botao).attr("onclick", `enviarPedido('enviar', ${ped_codigo})`);
+				$.post( "<?= site_url('Pedidos/enviarEmail'); ?>", { ped_codigo: ped_codigo } )
+				.done(function( data ) {
+					data = JSON.parse(data);
+					if (data.menssagem == 'success') {				
+						$("#modal_enviar_pedido").modal('hide');
+						mostrarMenssagem('email');	
+					} else {						
+						mostrarMenssagem('erro');
+					}
+				});	
 			}
 		}
 		
@@ -632,6 +647,13 @@
 			}
 			if (opc == 'removido') {
 				$("#menssagem_alert").text('Dados removidos com sucesso!');				
+				$("#menssagem_alert").removeClass('alert-danger');
+				$("#menssagem_alert").addClass('alert-dark');
+				$("#menssagem_alert").fadeIn(100);
+				$("#menssagem_alert").fadeOut(3000);
+			}
+			if (opc == 'email') {
+				$("#menssagem_alert").text('Email enviado com sucesso!');				
 				$("#menssagem_alert").removeClass('alert-danger');
 				$("#menssagem_alert").addClass('alert-dark');
 				$("#menssagem_alert").fadeIn(100);
