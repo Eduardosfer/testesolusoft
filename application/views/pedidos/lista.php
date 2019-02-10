@@ -37,6 +37,8 @@
 							<td><?= $dado->ped_observacao ?></td>							
 							<td><?= $dado->ped_forma_pagamento ?></td>							
 							<td class="text-center">																						
+								<button type="button" onclick="enviarPedido('mostrar',  <?= $dado->ped_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Enviar por email" class="btn btn-dark"><i class="fas fa-envelope"></i></button>
+								<button type="button" onclick="imprimirPedido(<?= $dado->ped_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Imprimir" class="btn btn-dark"><i class="fas fa-print"></i></button>
 								<button type="button" onclick="editarPedido('mostrar',  <?= $dado->ped_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 								<button type="button" onclick="removerPedido('mostrar', <?= $dado->ped_codigo ?>);" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 							</td>
@@ -521,6 +523,8 @@
 											<td>${dados.ped_observacao}</td>
 											<td>${dados.ped_forma_pagamento}</td>
 											<td class="text-center">
+												<button type="button" onclick="enviarPedido('mostrar',  ${dados.ped_codigo});" data-toggle="tooltip" data-placement="top" title="Enviar por email" class="btn btn-dark"><i class="fas fa-envelope"></i></button>
+												<button type="button" onclick="imprimirPedido(${dados.ped_codigo});" data-toggle="tooltip" data-placement="top" title="Imprimir" class="btn btn-dark"><i class="fas fa-print"></i></button>
 												<button type="button" onclick="editarPedido('mostrar', ${dados.ped_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 												<button type="button" onclick="removerPedido('mostrar', ${dados.ped_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 											</td>
@@ -539,6 +543,8 @@
 											<td>${dados.ped_observacao}</td>
 											<td>${dados.ped_forma_pagamento}</td>
 											<td class="text-center">
+												<button type="button" onclick="enviarPedido('mostrar',  ${dados.ped_codigo});" data-toggle="tooltip" data-placement="top" title="Enviar por email" class="btn btn-dark"><i class="fas fa-envelope"></i></button>
+												<button type="button" onclick="imprimirPedido(${dados.ped_codigo});" data-toggle="tooltip" data-placement="top" title="Imprimir" class="btn btn-dark"><i class="fas fa-print"></i></button>
 												<button type="button" onclick="editarPedido('mostrar', ${dados.ped_codigo})" data-toggle="tooltip" data-placement="top" title="Editar" class="btn btn-outline-dark"><i class="fas fa-pen"></i></button>
 												<button type="button" onclick="removerPedido('mostrar', ${dados.ped_codigo});" data-toggle="tooltip" data-placement="top" title="Excluir" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
 											</td>																		
