@@ -147,7 +147,8 @@ class Pedidos extends CI_Controller {
 		// Obtendo os itens do pedido
 		$this->load->model('Produtos_Pedido_Model');
 		$pedido->itens_do_pedido = $this->Produtos_Pedido_Model->getDataJoined(array("pro_ped_codigo_pedido" => $where['ped_codigo']));
-		$this->view_data['pedido'] = $pedido;		
+		$this->view_data['pedido'] = $pedido;	
+		// Convertendo para PDF
 		$mpdf = new mPDF();
 		$html = $this->load->view('pedidos/dados_pedido', $this->view_data, true);
 		$mpdf->SetHeader("Pedido $pedido->ped_codigo");
