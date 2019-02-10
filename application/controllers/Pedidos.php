@@ -141,7 +141,14 @@ class Pedidos extends CI_Controller {
 	}	
 
 	public function imprimirPedido($ped_codigo) {
-		echo "<h1>Ola mundo $ped_codigo</h1>";
+		$where = array("ped_codigo" => $ped_codigo);				
+		$this->load->model('Pedidos_Model');
+		$pedido = $this->Pedidos_Model->getOneDataJoined($where);
+		// Obtendo os itens do pedido
+		$this->load->model('Produtos_Pedido_Model');
+		$pedido->itens_do_pedido = $this->Produtos_Pedido_Model->getDataJoined(array("pro_ped_codigo_pedido" => $where['ped_codigo']));
+		$this->view_data['pedido'] = $pedido;
+		$this->load->view('pedidos/dados_pedido', $this->view_data);	
 	}
 
 }
