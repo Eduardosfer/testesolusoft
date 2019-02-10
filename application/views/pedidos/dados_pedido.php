@@ -43,7 +43,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($pedido->itens_do_pedido as $item) { ?>
+			<?php 				
+				$valor_total = 0;
+				foreach ($pedido->itens_do_pedido as $item) { 					
+					$valor_total += $item->pro_valor; 
+				?>
 				<tr>
 					<td><?= $item->pro_codigo ?></td>
 					<td><?= $item->pro_nome ?></td>
@@ -52,6 +56,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td><?= "R$ " . $item->pro_valor ?></td>
 				</tr>
 			<?php } ?>
+				<tr>
+					<td>Total</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><?= "R$ " . $valor_total ?></td>
+				</tr>
 		</tbody>
 	</table>
 </body>
