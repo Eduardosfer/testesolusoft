@@ -11,10 +11,13 @@ Fontawesome V. 5.7.1
 
 Instalação:
 
-Configurar hambiente de desenvolvimento/servidor com Apache, MySQL e PHP nas versões citadas acima;
+Configurar ambiente de desenvolvimento/servidor com Apache, MySQL e PHP nas versões citadas acima;
 Puxar o projeto;
-Importar o arquivo de banco de dados (testesolusoft.sql somente a estrutura ou testesolusoftpovoado.sql com dados) que esta na pasta "Banco de dados" na raiz do projeto;
+
+Importar o arquivo de banco de dados (testesolusoft.sql somente a estrutura ou testesolusoftpopulado.sql com dados) que esta na pasta "Banco de dados" na raiz do projeto;
+
 Configurar o dataBase.php do Codeigniter com o nome do banco, local, usuario e senha do mysql;
+
 Configurar o config.php com o local onde será rodado o sistema (está localhost como padrão);
 
 Instalar a mPDF por meio do composer:
