@@ -293,6 +293,35 @@
 	</div>
 	<!-- Fim do modal de exclusão -->
 
+	<!-- Modal de envio de pedido por email -->
+	<div class="modal fade" id="modal_enviar_pedido" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="modal_enviar_pedido" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-dark text-white">
+					<h5 class="modal-title" id="modal_enviar_pedido_title">Deseja enviar o pedido?</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">	
+					<div class="row">			
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="enviar_cli_email">Deseja enviar o pedido para o seguinte email:</label>
+								<input readonly="true" type="email" class="form-control" id="enviar_cli_email" name="enviar_cli_email">							
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancelar</button>
+					<button type="button" id="botao_enviar_pedido" class="btn btn-dark"><i class="fas fa-envelope"></i> Enviar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fim do modal de pedido por email -->
+
 	<!-- Fim de modais -->
 
 	<script>		
@@ -427,6 +456,26 @@
 				});				
 			}	
 			
+		}
+
+		function enviarPedido(opc, ped_codigo) {
+			
+			if (opc == 'mostrar') {
+				$.post( "<?= site_url('Pedidos/obterEmailCliente'); ?>", { ped_codigo: ped_codigo } )
+				.done(function( data ) {
+					data = JSON.parse(data);
+					if (data.menssagem == 'success') {											
+						$("#enviar_cli_email").val(data.cli_email);
+						$("#modal_enviar_pedido").modal("show");		
+					} else {						
+						mostrarMenssagem('erro');
+					}
+				});				
+			}
+
+			if (opc == 'enviar') {
+
+			}
 		}
 		
 		function adicionarItemPedido(opc) {
