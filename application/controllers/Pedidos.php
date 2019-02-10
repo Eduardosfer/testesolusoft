@@ -197,4 +197,8 @@ class Pedidos extends CI_Controller {
 		return $menssagem;
 	}	
 
+	public function imprimirPedido($ped_codigo) {
+		echo "<h1>Ola mundo $ped_codigo</h1>";
+	}
+
 }
